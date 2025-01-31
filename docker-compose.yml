@@ -1,0 +1,54 @@
+version: '3.8'
+
+services:
+
+  mariadb:
+    image: mariadb:11.0.2
+    container_name: utilisateur_db_container_syp
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+      MYSQL_DATABASE: ${DB_DB}
+      MYSQL_USER: ${DB_USER}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+    ports:
+      - "3306:3306"
+
+  keycloak:
+    image: quay.io/keycloak/keycloak:latest
+    restart: unless-stopped
+    container_name: keycloak_container_syp
+    environment:
+      KC_BOOTSTRAP_ADMIN_USERNAME: admin
+      KC_BOOTSTRAP_ADMIN_PASSWORD: admin
+      # KC_DB: mariadb
+      # KC_DB_URL: jdbc:mariadb://keycloak-bd:3306/keycloak
+      # KC_DB_USERNAME: admin
+      # KC_DB_PASSWORD: admin
+    ports:
+      - "9001:8080"
+    command: start-dev
+
+  rabbitmq:
+    image: rabbitmq:management-alpine
+    container_name: rabbitmq_container_syp
+    restart: unless-stopped
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    environment:
+      RABBITMQ_ERLANG_COOKIE: "secret_cookie"
+
+  phpmyadmin:
+    image: phpmyadmin:latest
+    container_name: phpmyadmin_container_syp
+    restart: unless-stopped
+    ports:
+      - "8582:80"
+    environment:
+      PMA_ARBITRARY: 1
+      PMA_HOST: mariadb
+      PMA_USER: root
+      PMA_PASSWORD: ${DB_PASSWORD}
+    links:
+      - mariadb
