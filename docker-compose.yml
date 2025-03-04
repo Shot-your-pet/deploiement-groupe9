@@ -30,8 +30,26 @@ services:
     ports:
       - "9001:8080"
     volumes:
-      - "SPI_Keycloak.jar:/opt/keycloak/providers/syp-event-listener.jar"
+      - "./SPI_Keycloak.jar:/opt/keycloak/providers/syp-event-listener.jar"
     command: start-dev
+
+  utilisateur:
+    image: ghcr.io/shot-your-pet/utilisateur-groupe9/${UTILISATEUR_IMAGE}
+    container_name: utilisateur_container_syp
+    restart: unless-stopped
+    ports:
+      - "8084:8080"
+    environment:
+      DB_DB: ${DB_DB}
+      DB_USER: ${DB_USER}
+      DB_PASSWORD: ${DB_PASSWORD}
+      DB_HOST: mariadb
+      DB_PORT: 3306
+      AUTH_PROVIDER_URL: ${AUTH_PROVIDER_URL}
+      RABBITMQ_HOST: rabbitmq
+      RABBITMQ_PORT: 5672
+      RABBITMQ_USERNAME: guest
+      RABBITMQ_PASSWORD: guest
 
   rabbitmq:
     image: rabbitmq:management-alpine
