@@ -15,18 +15,22 @@ services:
       - "3306:3306"
 
   keycloak:
-    image: quay.io/keycloak/keycloak:latest
+    image: quay.io/keycloak/keycloak:25.0.1
     restart: unless-stopped
     container_name: keycloak_container_syp
     environment:
-      KC_BOOTSTRAP_ADMIN_USERNAME: admin
-      KC_BOOTSTRAP_ADMIN_PASSWORD: admin
+      KEYCLOAK_ADMIN: admin
+      KEYCLOAK_ADMIN_PASSWORD : admin
+      KC_EVENTS_LISTENERS: "shot_your_pet_event_listener,email"
+      JAVA_OPTS_APPEND: "-Drabbitmq.host=${RABBITMQ_HOST} -Drabbitmq.port=${RABBITMQ_PORT} -Drabbitmq.username=${RABBITMQ_USERNAME} -Drabbitmq.password=${RABBITMQ_PASSWORD}"
       # KC_DB: mariadb
       # KC_DB_URL: jdbc:mariadb://keycloak-bd:3306/keycloak
       # KC_DB_USERNAME: admin
       # KC_DB_PASSWORD: admin
     ports:
       - "9001:8080"
+    volumes:
+      - "SPI_Keycloak.jar:/opt/keycloak/providers/syp-event-listener.jar"
     command: start-dev
 
   rabbitmq:
