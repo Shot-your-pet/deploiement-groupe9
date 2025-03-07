@@ -1,0 +1,599 @@
+{
+  "uuid": "588f192a-09bd-465a-9564-73d59a38b151",
+  "lastMigration": 33,
+  "name": "Shot your pet mockoon",
+  "endpointPrefix": "",
+  "latency": 0,
+  "port": 3001,
+  "hostname": "",
+  "folders": [],
+  "routes": [
+    {
+      "uuid": "bbe99f7c-4bd5-407b-9179-10ea8add5131",
+      "type": "http",
+      "documentation": "Affiche la timeline de l'utilisateur",
+      "method": "get",
+      "endpoint": "timeline",
+      "responses": [
+        {
+          "uuid": "a3269eec-bca9-4bde-87b6-08b301030c16",
+          "body": "{\n  \"code\": \"200\",\n  \"message\": \"Timeline récupérée\",\n  \"contenu\": {\n    \"actualiseLe\": \"2024-12-12T00:00:00\",\n    \"publications\": [\n      {\n        \"id\": \"id1\",\n        \"datePublication\": \"2024-12-12T00:00:00\",\n        \"description\": \"On se déttend les balloches ici\",\n        \"auteur\": \"Randy\",\n        \"photo\": \"publication.jpg\",\n        \"nombreLike\": \"23\",\n        \"likeUtilisateur\": true\n      },\n      {\n        \"id\": \"id2\",\n        \"datePublication\": \"2024-12-12T00:00:00\",\n        \"description\": \"Le caca c'est ma came\",\n        \"auteur\": \"Alban\",\n        \"photo\": \"publication.jpg\",\n        \"nombreLike\": \"2\",\n        \"likeUtilisateur\": false\n      },\n      {\n        \"id\": \"id3\",\n        \"datePublication\": \"2024-12-12T00:00:00\",\n        \"description\": \"C'est moi qui vais te le détendre tes balloches Randy\",\n        \"auteur\": \"Jordan\",\n        \"photo\": \"publication.jpg\",\n        \"nombreLike\": \"253\",\n        \"likeUtilisateur\": true\n      }\n    ]\n  }\n}",
+          "latency": 0,
+          "statusCode": 200,
+          "label": "OK",
+          "headers": [],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": true,
+          "crudKey": "id",
+          "callbacks": []
+        },
+        {
+          "uuid": "1c1e1243-cf2a-4e3c-a727-1134a568b7e9",
+          "body": "",
+          "latency": 0,
+          "statusCode": 401,
+          "label": "Non authentifié",
+          "headers": [],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": false,
+          "crudKey": "id",
+          "callbacks": []
+        }
+      ],
+      "responseMode": null,
+      "streamingMode": null,
+      "streamingInterval": 0
+    },
+    {
+      "uuid": "01936356-e12a-4ec6-8ef4-0b8b54e6d5a6",
+      "type": "http",
+      "documentation": "Publie la photo de l'utilisateur pour le challenge J",
+      "method": "post",
+      "endpoint": "publications",
+      "responses": [
+        {
+          "uuid": "69c0d989-594a-48ed-99f6-6ace1aa64e06",
+          "body": "{\n  \"code\": \"200\",\n  \"message\": \"Shot publié !\",\n  \"contenu\":\n    {\n      \"id\": \"\",\n      \"datePublication\":\n      \"description\": \"\",\n    }\n}",
+          "latency": 0,
+          "statusCode": 200,
+          "label": "OK",
+          "headers": [],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": true,
+          "crudKey": "id",
+          "callbacks": []
+        },
+        {
+          "uuid": "032e83fd-bab2-4341-8eb7-2aec1880322c",
+          "body": "{}",
+          "latency": 0,
+          "statusCode": 401,
+          "label": "Non authentifié",
+          "headers": [],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": false,
+          "crudKey": "id",
+          "callbacks": []
+        },
+        {
+          "uuid": "85c3850d-51d0-4e6e-b761-c58693088975",
+          "body": "",
+          "latency": 0,
+          "statusCode": 409,
+          "label": "Conflits",
+          "headers": [],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": false,
+          "crudKey": "id",
+          "callbacks": []
+        }
+      ],
+      "responseMode": null,
+      "streamingMode": null,
+      "streamingInterval": 0
+    },
+    {
+      "uuid": "a40d9757-ec1a-4c32-8618-e7f79f22e815",
+      "type": "http",
+      "documentation": "Récupère l'image d'un utilisateur ou d'une publication",
+      "method": "get",
+      "endpoint": "images/:img",
+      "responses": [
+        {
+          "uuid": "aeb031b9-d6df-4e93-976b-907f0799b244",
+          "body": "{}",
+          "latency": 0,
+          "statusCode": 200,
+          "label": "OK",
+          "headers": [],
+          "bodyType": "FILE",
+          "filePath": "C:\\Users\\maxse\\OneDrive\\Images\\Wankul\\Wankul-20180909150952.png",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": true,
+          "crudKey": "id",
+          "callbacks": []
+        },
+        {
+          "uuid": "3940fa40-9a19-4cfc-9a0b-a1a24d203083",
+          "body": "",
+          "latency": 0,
+          "statusCode": 404,
+          "label": "Pas de photo",
+          "headers": [],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": false,
+          "crudKey": "id",
+          "callbacks": []
+        }
+      ],
+      "responseMode": null,
+      "streamingMode": null,
+      "streamingInterval": 0
+    },
+    {
+      "uuid": "ca6f1e77-e2c5-4b5b-b670-f790646d9626",
+      "type": "http",
+      "documentation": "Récupère le détails du profil de l'utilisateur connecté",
+      "method": "get",
+      "endpoint": "profile",
+      "responses": [
+        {
+          "uuid": "702823b7-6a24-4671-8ff2-e88f75b7c805",
+          "body": "{\n  \"code\": \"200\",\n  \"message\": \"Profil de l'utilisateur récupérée\",\n  \"contenu\": {\n    \"id\": \"{{ faker 'string.uuid' }}\",\n    \"pseudo\": \"xXGamingRGB45000Xx\",\n    \"prenom\": \"Thiméo\",\n    \"nom\": \"Martin\",\n    \"email\": \"tim.méo@gmail.com\",\n    \"derniereConnexion\": \"2024-12-12T00:00:00\",\n    \"avatar\": \"xXGamingRGB45000Xx-image.jpg\",\n    \"membreDepuis\": \"2024-12-12T00:00:00\"\n  }\n}",
+          "latency": 0,
+          "statusCode": 200,
+          "label": "OK",
+          "headers": [],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": true,
+          "crudKey": "id",
+          "callbacks": []
+        },
+        {
+          "uuid": "79bed19c-f2c8-498a-b44a-fcff52860fe3",
+          "body": "{}",
+          "latency": 0,
+          "statusCode": 401,
+          "label": "Non authentifié",
+          "headers": [],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": false,
+          "crudKey": "id",
+          "callbacks": []
+        }
+      ],
+      "responseMode": null,
+      "streamingMode": null,
+      "streamingInterval": 0
+    },
+    {
+      "uuid": "b335c844-19c5-45de-bdb9-ca87be60ca3e",
+      "type": "http",
+      "documentation": "Modifie le profil de l'utilisateur connecté",
+      "method": "put",
+      "endpoint": "utilisateurs",
+      "responses": [
+        {
+          "uuid": "4c3fd119-4a28-448b-85f0-f42633216084",
+          "body": "{\n  \"code\": \"200\",\n  \"message\": \"Informations utilisateur modifiés\",\n}",
+          "latency": 0,
+          "statusCode": 200,
+          "label": "OK",
+          "headers": [],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": true,
+          "crudKey": "id",
+          "callbacks": []
+        },
+        {
+          "uuid": "d952075d-4bc9-410e-92ff-bb4cde92a315",
+          "body": "",
+          "latency": 0,
+          "statusCode": 401,
+          "label": "Non authentifié",
+          "headers": [],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": false,
+          "crudKey": "id",
+          "callbacks": []
+        }
+      ],
+      "responseMode": null,
+      "streamingMode": null,
+      "streamingInterval": 0
+    },
+    {
+      "uuid": "e984bd20-b88f-4d16-8f17-fa826fbd7445",
+      "type": "http",
+      "documentation": "Récupère les notifications de l'utilisateur connecté",
+      "method": "get",
+      "endpoint": "notifications",
+      "responses": [
+        {
+          "uuid": "d7f83cac-0d9a-4e2d-ba51-647c866a7cf9",
+          "body": "{\n  \"code\": \"200\",\n  \"message\": \"Notifications de l'utilisateur récupérées\",\n  \"contenu\": {}\n}",
+          "latency": 0,
+          "statusCode": 200,
+          "label": "OK",
+          "headers": [],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": true,
+          "crudKey": "id",
+          "callbacks": []
+        },
+        {
+          "uuid": "4045ff5c-e34b-4e49-beab-5264d79b82dd",
+          "body": "{}",
+          "latency": 0,
+          "statusCode": 401,
+          "label": "Non authentifié",
+          "headers": [],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": false,
+          "crudKey": "id",
+          "callbacks": []
+        }
+      ],
+      "responseMode": null,
+      "streamingMode": null,
+      "streamingInterval": 0
+    },
+    {
+      "uuid": "079608b5-02fb-4836-bf98-0e5053937b51",
+      "type": "http",
+      "documentation": "Récupères tous les profils d'utilisateurs pour pouvoir ajouter en ami",
+      "method": "get",
+      "endpoint": "profiles",
+      "responses": [
+        {
+          "uuid": "7b9e5e26-44c4-41f5-a5a1-6a8485640e57",
+          "body": "{\n  \"code\": \"200\",\n  \"message\": \"Profils des utilisateurs récupérés\",\n  \"contenu\": {}\n}",
+          "latency": 0,
+          "statusCode": 200,
+          "label": "OK",
+          "headers": [],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": true,
+          "crudKey": "id",
+          "callbacks": []
+        },
+        {
+          "uuid": "ba3d3291-4bff-4434-83a6-4582a2139afc",
+          "body": "{}",
+          "latency": 0,
+          "statusCode": 401,
+          "label": "Non authentifié",
+          "headers": [],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": false,
+          "crudKey": "id",
+          "callbacks": []
+        }
+      ],
+      "responseMode": null,
+      "streamingMode": null,
+      "streamingInterval": 0
+    },
+    {
+      "uuid": "ffe1aa3d-385e-47f4-846a-e72999776094",
+      "type": "http",
+      "documentation": "Récupère le profil d'un utilisateur",
+      "method": "get",
+      "endpoint": "profiles/:idUtilisateur",
+      "responses": [
+        {
+          "uuid": "ed1dbd79-bb67-4bd2-a0e9-71725cfc6187",
+          "body": "{\n  \"code\": \"200\",\n  \"message\": \"Details d'un utilisateur récupéré\",\n  \"contenu\": {}\n}",
+          "latency": 0,
+          "statusCode": 200,
+          "label": "OK",
+          "headers": [],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": true,
+          "crudKey": "id",
+          "callbacks": []
+        },
+        {
+          "uuid": "fc16bbe9-dae9-4783-9663-f8b640068e35",
+          "body": "{}",
+          "latency": 0,
+          "statusCode": 401,
+          "label": "Non authentifié",
+          "headers": [],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": false,
+          "crudKey": "id",
+          "callbacks": []
+        },
+        {
+          "uuid": "e82bfa2d-866c-4dff-b7bc-4837a76d6424",
+          "body": "{}",
+          "latency": 0,
+          "statusCode": 404,
+          "label": "Utilisateur introuvable",
+          "headers": [],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": false,
+          "crudKey": "id",
+          "callbacks": []
+        }
+      ],
+      "responseMode": null,
+      "streamingMode": null,
+      "streamingInterval": 0
+    },
+    {
+      "uuid": "964492aa-1f9c-4043-a77d-fb3b5488fc11",
+      "type": "http",
+      "documentation": "",
+      "method": "post",
+      "endpoint": "upload",
+      "responses": [
+        {
+          "uuid": "62cd3e01-10bd-4af6-8a90-92d98df5cbe7",
+          "body": "{\n  \"code\": \"200\",\n  \"message\": \"Image enregistrée\",\n  \"contenu\": {\n    \"idPhoto\": \"{{ faker 'string.uuid' }}\"\n  }\n}",
+          "latency": 0,
+          "statusCode": 200,
+          "label": "",
+          "headers": [],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": true,
+          "crudKey": "id",
+          "callbacks": []
+        }
+      ],
+      "responseMode": null,
+      "streamingMode": null,
+      "streamingInterval": 0
+    },
+    {
+      "uuid": "d4181db0-c8ec-4963-8b2a-aa173aac2d61",
+      "type": "http",
+      "documentation": "Récupère le challenge du jour",
+      "method": "get",
+      "endpoint": "challenge",
+      "responses": [
+        {
+          "uuid": "5ea1245a-c8ef-4e67-9ca9-10e6a93f0ff4",
+          "body": "{\n  \"code\": \"200\",\n  \"message\": \"Dernier challenge récupérer\",\n  \"contenu\": {\n    \"id\": \"challenge254\",\n    \"intitule\": \"Shoot ton animal en train de faire caca dans la gorge de ton pote\",\n    \"dateDebut\": \"2024-12-12T00:00:00\",\n    \"dateFin\": \"2024-12-13T00:00:00\"\n  }\n}",
+          "latency": 0,
+          "statusCode": 200,
+          "label": "",
+          "headers": [],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": true,
+          "crudKey": "id",
+          "callbacks": []
+        }
+      ],
+      "responseMode": null,
+      "streamingMode": null,
+      "streamingInterval": 0
+    }
+  ],
+  "rootChildren": [
+    {
+      "type": "route",
+      "uuid": "bbe99f7c-4bd5-407b-9179-10ea8add5131"
+    },
+    {
+      "type": "route",
+      "uuid": "01936356-e12a-4ec6-8ef4-0b8b54e6d5a6"
+    },
+    {
+      "type": "route",
+      "uuid": "a40d9757-ec1a-4c32-8618-e7f79f22e815"
+    },
+    {
+      "type": "route",
+      "uuid": "ca6f1e77-e2c5-4b5b-b670-f790646d9626"
+    },
+    {
+      "type": "route",
+      "uuid": "b335c844-19c5-45de-bdb9-ca87be60ca3e"
+    },
+    {
+      "type": "route",
+      "uuid": "e984bd20-b88f-4d16-8f17-fa826fbd7445"
+    },
+    {
+      "type": "route",
+      "uuid": "079608b5-02fb-4836-bf98-0e5053937b51"
+    },
+    {
+      "type": "route",
+      "uuid": "ffe1aa3d-385e-47f4-846a-e72999776094"
+    },
+    {
+      "type": "route",
+      "uuid": "964492aa-1f9c-4043-a77d-fb3b5488fc11"
+    },
+    {
+      "type": "route",
+      "uuid": "d4181db0-c8ec-4963-8b2a-aa173aac2d61"
+    }
+  ],
+  "proxyMode": false,
+  "proxyHost": "",
+  "proxyRemovePrefix": false,
+  "tlsOptions": {
+    "enabled": false,
+    "type": "CERT",
+    "pfxPath": "",
+    "certPath": "",
+    "keyPath": "",
+    "caPath": "",
+    "passphrase": ""
+  },
+  "cors": true,
+  "headers": [
+    {
+      "key": "Access-Control-Allow-Origin",
+      "value": "*"
+    },
+    {
+      "key": "Access-Control-Allow-Methods",
+      "value": "GET,POST,PUT,PATCH,DELETE,HEAD,OPTIONS"
+    },
+    {
+      "key": "Access-Control-Allow-Headers",
+      "value": "Content-Type, Origin, Accept, Authorization, Content-Length, X-Requested-With"
+    },
+    {
+      "key": "Content-Type",
+      "value": "application/json"
+    }
+  ],
+  "proxyReqHeaders": [
+    {
+      "key": "",
+      "value": ""
+    }
+  ],
+  "proxyResHeaders": [
+    {
+      "key": "",
+      "value": ""
+    }
+  ],
+  "data": [],
+  "callbacks": []
+}

@@ -2,18 +2,6 @@ version: '3.8'
 
 services:
 
-  mariadb:
-    image: mariadb:11.0.2
-    container_name: utilisateur_db_container_syp
-    restart: unless-stopped
-    environment:
-      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
-      MYSQL_DATABASE: ${DB_DB}
-      MYSQL_USER: ${DB_USER}
-      MYSQL_PASSWORD: ${DB_PASSWORD}
-    ports:
-      - "3306:3306"
-
   keycloak:
     image: quay.io/keycloak/keycloak:25.0.1
     restart: unless-stopped
@@ -33,6 +21,8 @@ services:
       - "./SPI_Keycloak.jar:/opt/keycloak/providers/syp-event-listener.jar"
       - "./realm-syp.json:/opt/keycloak/data/import/realm-export.json"
     command: start-dev --import-realm
+    depends_on:
+      - rabbitmq
 
   utilisateur:
     image: ghcr.io/shot-your-pet/utilisateur-groupe9/${UTILISATEUR_IMAGE}
@@ -51,6 +41,9 @@ services:
       RABBITMQ_PORT: 5672
       RABBITMQ_USERNAME: guest
       RABBITMQ_PASSWORD: guest
+    depends_on:
+      - rabbitmq
+      - mariadb
 
   images:
     image: ghcr.io/shot-your-pet/images-groupe9/${IMAGES_IMAGE}
@@ -68,6 +61,9 @@ services:
       RABBITMQ_PORT: 5672
       RABBITMQ_USERNAME: guest
       RABBITMQ_PASSWORD: guest
+    depends_on:
+      - rabbitmq
+      - mongodb_image
 
   frontend:
     image: ghcr.io/shot-your-pet/frontend-groupe9/${FRONTEND_IMAGE}
@@ -115,3 +111,15 @@ services:
       MONGO_INITDB_ROOT_PASSWORD: ${MONGO_PASSWORD}
     ports:
       - "27017:27017"
+
+  mariadb:
+    image: mariadb:11.0.2
+    container_name: utilisateur_db_container_syp
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+      MYSQL_DATABASE: ${DB_DB}
+      MYSQL_USER: ${DB_USER}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+    ports:
+      - "3306:3306"
