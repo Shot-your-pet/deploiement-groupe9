@@ -1,0 +1,13 @@
+### ADMIN
+POST http://localhost:9001/realms/ShotYourPet/protocol/openid-connect/token
+Content-Type: application/x-www-form-urlencoded
+
+grant_type = password &
+client_id = shotyourpet &
+username = user &
+password = user &
+scope = offline_access
+
+> {%
+    client.global.set("auth_token_admin", "Bearer " + response.body.access_token);
+%}

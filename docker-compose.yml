@@ -31,7 +31,8 @@ services:
       - "9001:8080"
     volumes:
       - "./SPI_Keycloak.jar:/opt/keycloak/providers/syp-event-listener.jar"
-    command: start-dev
+      - "./realm-syp.json:/opt/keycloak/data/import/realm-export.json"
+    command: start-dev --import-realm
 
   utilisateur:
     image: ghcr.io/shot-your-pet/utilisateur-groupe9/${UTILISATEUR_IMAGE}
@@ -50,6 +51,36 @@ services:
       RABBITMQ_PORT: 5672
       RABBITMQ_USERNAME: guest
       RABBITMQ_PASSWORD: guest
+
+  images:
+    image: ghcr.io/shot-your-pet/images-groupe9/${IMAGES_IMAGE}
+    container_name: images_container_syp
+    restart: unless-stopped
+    ports:
+      - "8081:8081"
+    environment:
+      MONGO_BD: ${MONGO_BD}
+      MONGO_HOST: ${MONGO_HOST}
+      MONGO_PORT: ${MONGO_PORT}
+      IMAGE_PATH: ${IMAGE_PATH}
+      REALM_KEYCLOAK_URL: ${REALM_KEYCLOAK_URL}
+      RABBITMQ_HOST: rabbitmq
+      RABBITMQ_PORT: 5672
+      RABBITMQ_USERNAME: guest
+      RABBITMQ_PASSWORD: guest
+
+  frontend:
+    image: ghcr.io/shot-your-pet/frontend-groupe9/${FRONTEND_IMAGE}
+    container_name: frontend_container_syp
+    restart: unless-stopped
+    ports:
+      - "8083:80"
+    environment:
+        API_URL: ${API_URL}
+        KEYCLOAK_URL: ${KEYCLOAK_URL}
+        KEYCLOAK_REALM: ${KEYCLOAK_REALM}
+        KEYCLOAK_CLIENT_ID: ${KEYCLOAK_CLIENT_ID}
+
 
   rabbitmq:
     image: rabbitmq:management-alpine
@@ -74,3 +105,13 @@ services:
       PMA_PASSWORD: ${DB_PASSWORD}
     links:
       - mariadb
+
+  mongodb_image:
+    image: mongo:8.0.5
+    container_name: mongodb-image_container_syp
+    restart: unless-stopped
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: ${MONGO_USERNAME}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_PASSWORD}
+    ports:
+      - "27017:27017"
