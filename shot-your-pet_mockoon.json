@@ -26,7 +26,15 @@
           "filePath": "",
           "databucketID": "",
           "sendFileAsBody": false,
-          "rules": [],
+          "rules": [
+            {
+              "target": "header",
+              "modifier": "Authorization",
+              "value": "",
+              "invert": true,
+              "operator": "null"
+            }
+          ],
           "rulesOperator": "OR",
           "disableTemplating": false,
           "fallbackTo404": false,
@@ -451,7 +459,7 @@
       "type": "http",
       "documentation": "",
       "method": "post",
-      "endpoint": "upload",
+      "endpoint": "images/upload",
       "responses": [
         {
           "uuid": "62cd3e01-10bd-4af6-8a90-92d98df5cbe7",
@@ -487,6 +495,37 @@
         {
           "uuid": "5ea1245a-c8ef-4e67-9ca9-10e6a93f0ff4",
           "body": "{\n  \"code\": \"200\",\n  \"message\": \"Dernier challenge récupérer\",\n  \"contenu\": {\n    \"id\": \"challenge254\",\n    \"intitule\": \"Shoot ton animal en train de faire caca dans la gorge de ton pote\",\n    \"dateDebut\": \"2024-12-12T00:00:00\",\n    \"dateFin\": \"2024-12-13T00:00:00\"\n  }\n}",
+          "latency": 0,
+          "statusCode": 200,
+          "label": "",
+          "headers": [],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": true,
+          "crudKey": "id",
+          "callbacks": []
+        }
+      ],
+      "responseMode": null,
+      "streamingMode": null,
+      "streamingInterval": 0
+    },
+    {
+      "uuid": "8d26092a-d57f-4573-8175-16b2d959cc93",
+      "type": "http",
+      "documentation": "Renvoie la liste des participations de l'utilisayteur pour l'afficher dans le calendrier",
+      "method": "get",
+      "endpoint": "profile/participations",
+      "responses": [
+        {
+          "uuid": "30fb4922-b201-486f-b26f-746555d67dc8",
+          "body": "{\n  \"code\": \"200\",\n  \"message\": \"Historique de participations récupéré\",\n  \"contenu\": [\n    {\n      \"datePublication\": \"2025-03-04T00:00:00\",\n      \"image\": \"participation.jpg\",\n      \"description\": \"Description du jour\",\n      \"nombreLike\": 278\n    },\n    {\n      \"datePublication\": \"2025-03-14T00:00:00\",\n      \"image\": \"participation.jpg\",\n      \"description\": \"Description du jour\",\n      \"nombreLike\": 2\n    },\n    {\n      \"datePublication\": \"2025-03-27T00:00:00\",\n      \"image\": \"participation.jpg\",\n      \"description\": \"Description du jour\",\n      \"nombreLike\": 93\n    }\n  ]\n}",
           "latency": 0,
           "statusCode": 200,
           "label": "",
@@ -549,6 +588,10 @@
     {
       "type": "route",
       "uuid": "d4181db0-c8ec-4963-8b2a-aa173aac2d61"
+    },
+    {
+      "type": "route",
+      "uuid": "8d26092a-d57f-4573-8175-16b2d959cc93"
     }
   ],
   "proxyMode": false,

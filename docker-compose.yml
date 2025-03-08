@@ -61,9 +61,11 @@ services:
       RABBITMQ_PORT: 5672
       RABBITMQ_USERNAME: guest
       RABBITMQ_PASSWORD: guest
+      ALLOWED_CORS: ${ALLOWED_CORS}
     depends_on:
       - rabbitmq
       - mongodb_image
+      - keycloak
 
   frontend:
     image: ghcr.io/shot-your-pet/frontend-groupe9/${FRONTEND_IMAGE}
