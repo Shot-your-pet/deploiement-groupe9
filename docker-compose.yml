@@ -1,14 +1,13 @@
-version: '3.8'
+version: "3.8"
 
 services:
-
   keycloak:
     image: quay.io/keycloak/keycloak:25.0.1
     restart: unless-stopped
     container_name: keycloak_container_syp
     environment:
       KEYCLOAK_ADMIN: admin
-      KEYCLOAK_ADMIN_PASSWORD : admin
+      KEYCLOAK_ADMIN_PASSWORD: admin
       KC_EVENTS_LISTENERS: "shot_your_pet_event_listener,email"
       JAVA_OPTS_APPEND: "-Drabbitmq.host=${RABBITMQ_HOST} -Drabbitmq.port=${RABBITMQ_PORT} -Drabbitmq.username=${RABBITMQ_USERNAME} -Drabbitmq.password=${RABBITMQ_PASSWORD}"
       # KC_DB: mariadb
@@ -42,9 +41,10 @@ services:
       RABBITMQ_USERNAME: guest
       RABBITMQ_PASSWORD: guest
     depends_on:
-      - rabbitmq
-      - mariadb
-
+      rabbitmq:
+        condition: service_started
+      mariadb:
+        condition: service_healthy
   images:
     image: ghcr.io/shot-your-pet/images-groupe9/${IMAGES_IMAGE}
     container_name: images_container_syp
@@ -74,11 +74,10 @@ services:
     ports:
       - "8083:80"
     environment:
-        API_URL: ${API_URL}
-        KEYCLOAK_URL: ${KEYCLOAK_URL}
-        KEYCLOAK_REALM: ${KEYCLOAK_REALM}
-        KEYCLOAK_CLIENT_ID: ${KEYCLOAK_CLIENT_ID}
-
+      API_URL: ${API_URL}
+      KEYCLOAK_URL: ${KEYCLOAK_URL}
+      KEYCLOAK_REALM: ${KEYCLOAK_REALM}
+      KEYCLOAK_CLIENT_ID: ${KEYCLOAK_CLIENT_ID}
 
   rabbitmq:
     image: rabbitmq:management-alpine
@@ -125,3 +124,8 @@ services:
       MYSQL_PASSWORD: ${DB_PASSWORD}
     ports:
       - "3306:3306"
+    healthcheck:
+      test: mariadb-admin ping -h 127.0.0.1 -u $$MYSQL_USER --password=$$MYSQL_PASSWORD
+      timeout: 10s
+      start_period: 5s
+      retries: 10
