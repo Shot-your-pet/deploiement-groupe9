@@ -129,3 +129,34 @@ services:
       timeout: 10s
       start_period: 5s
       retries: 10
+  publications:
+    image: ghcr.io/shot-your-pet/publications:latest
+    pull_policy: always
+    container_name: publications_container_syp
+    restart: unless-stopped
+    ports:
+      - "8085:8080"
+    networks:
+      - publications
+    depends_on:
+      rabbitmq:
+        condition: service_started
+      mariadb:
+        condition: service_healthy
+    environment:
+      MONGODB_HOST: publications_image
+      MONGODB_USERNAME: ${MONGO_USERNAME}
+      MONGODB_PASSWORD: ${MONGO_PASSWORD}
+      REALM_KEYCLOAK_URL: ${KEYCLOAK_REALM}
+      RABBIT_MQ_ADDRESS: amqp://${RABBITMQ_USERNAME}:${RABBITMQ_PASSWORD}@${RABBITMQ_HOST}:${RABBITMQ_PORT}/
+  publications_image:
+    image: mongo:8.0.5
+    container_name: mongodb-publications_container_syp
+    restart: unless-stopped
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: ${PUBLICATIONS_MONGODB_USERNAME}
+      MONGO_INITDB_ROOT_PASSWORD: ${PUBLICATIONS_MONGODB_USERNAME}
+    networks:
+      - publications
+networks:
+  publications:
