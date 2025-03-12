@@ -1,5 +1,8 @@
+#@url = http://localhost:9001
+@url = http://192.168.1.14:9001
+
 ### ADMIN
-POST http://localhost:9001/realms/ShotYourPet/protocol/openid-connect/token
+POST http://{{url}}/realms/ShotYourPet/protocol/openid-connect/token
 Content-Type: application/x-www-form-urlencoded
 
 grant_type = password &
