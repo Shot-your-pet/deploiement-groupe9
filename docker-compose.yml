@@ -1,6 +1,18 @@
-version: "3.8"
-
 services:
+
+  nginx:
+    image: nginx:alpine
+    container_name: gateway_container_syp
+    restart: unless-stopped
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+    depends_on:
+      - utilisateur
+      - images
+      - frontend
+
   keycloak:
     image: quay.io/keycloak/keycloak:25.0.1
     restart: unless-stopped
@@ -88,20 +100,6 @@ services:
       - "15672:15672"
     environment:
       RABBITMQ_ERLANG_COOKIE: "secret_cookie"
-
-  phpmyadmin:
-    image: phpmyadmin:latest
-    container_name: phpmyadmin_container_syp
-    restart: unless-stopped
-    ports:
-      - "8582:80"
-    environment:
-      PMA_ARBITRARY: 1
-      PMA_HOST: mariadb
-      PMA_USER: root
-      PMA_PASSWORD: ${DB_PASSWORD}
-    links:
-      - mariadb
 
   mongodb_image:
     image: mongo:8.0.5

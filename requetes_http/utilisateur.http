@@ -1,0 +1,18 @@
+@url = http://localhost:8080
+
+###
+GET {{url}}/utilisateurs/profile
+Authorization: {{auth_token_admin}}
+
+###
+GET {{url}}/utilisateurs
+Authorization: {{auth_token_admin}}
+
+###
+PUT {{url}}/utilisateurs/avatar
+Authorization: {{auth_token_admin}}
+Content-Type: application/json
+
+{
+  "idImage": ""
+}

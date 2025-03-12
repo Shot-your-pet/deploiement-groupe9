@@ -1,0 +1,5 @@
+@url = http://localhost:8081
+
+###
+GET {{url}}/images/1899770240116592640
+Authorization: {{auth_token_admin}}
