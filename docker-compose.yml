@@ -1,5 +1,4 @@
 services:
-
   nginx:
     image: nginx:alpine
     container_name: gateway_container_syp
@@ -143,17 +142,16 @@ services:
       mariadb:
         condition: service_healthy
     environment:
-      MONGODB_HOST: publications_image
+      MONGODB_HOST: publications_db
       MONGODB_USERNAME: ${MONGO_USERNAME}
       MONGODB_PASSWORD: ${MONGO_PASSWORD}
       REALM_KEYCLOAK_URL: ${KEYCLOAK_REALM}
       RABBIT_MQ_ADDRESS: amqp://${RABBITMQ_USERNAME}:${RABBITMQ_PASSWORD}@${RABBITMQ_HOST}:${RABBITMQ_PORT}/
 
-  publications_image:
+  publications_db:
     image: mongo:8.0.5
     container_name: mongodb-publications_container_syp
     restart: unless-stopped
     environment:
       MONGO_INITDB_ROOT_USERNAME: ${PUBLICATIONS_MONGODB_USERNAME}
       MONGO_INITDB_ROOT_PASSWORD: ${PUBLICATIONS_MONGODB_USERNAME}
-
