@@ -143,8 +143,8 @@ services:
         condition: service_healthy
     environment:
       MONGODB_HOST: publications_db
-      MONGODB_USERNAME: ${MONGO_USERNAME}
-      MONGODB_PASSWORD: ${MONGO_PASSWORD}
+      MONGODB_USERNAME: ${PUBLICATIONS_MONGODB_USERNAME}
+      MONGODB_PASSWORD: ${PUBLICATIONS_MONGODB_PASSWORD}
       REALM_KEYCLOAK_URL: ${KEYCLOAK_REALM}
       RABBIT_MQ_ADDRESS: amqp://${RABBITMQ_USERNAME}:${RABBITMQ_PASSWORD}@${RABBITMQ_HOST}:${RABBITMQ_PORT}/
 
@@ -154,7 +154,13 @@ services:
     restart: unless-stopped
     environment:
       MONGO_INITDB_ROOT_USERNAME: ${PUBLICATIONS_MONGODB_USERNAME}
-      MONGO_INITDB_ROOT_PASSWORD: ${PUBLICATIONS_MONGODB_USERNAME}
+      MONGO_INITDB_ROOT_PASSWORD: ${PUBLICATIONS_MONGODB_PASSWORD}
+    healthcheck:
+      test: ["CMD", "mongosh", "--eval", '"db.adminCommand(''ping'')"']
+      interval: 5s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
 
   timeline:
     image: ghcr.io/shot-your-pet/timeline:${TIMELINE_IMAGE:-main}
