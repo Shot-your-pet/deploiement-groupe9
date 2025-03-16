@@ -1,17 +1,18 @@
 services:
-
   nginx:
     image: nginx:alpine
     container_name: gateway_container_syp
     restart: unless-stopped
     ports:
-      - "80:80"
+      - "8080:80"
     volumes:
       - ./nginx.conf:/etc/nginx/nginx.conf:ro
     depends_on:
       - utilisateur
       - images
       - frontend
+      - publications
+      - timeline
 
   keycloak:
     image: quay.io/keycloak/keycloak:25.0.1
@@ -63,8 +64,6 @@ services:
     image: ghcr.io/shot-your-pet/images-groupe9/${IMAGES_IMAGE}
     container_name: images_container_syp
     restart: unless-stopped
-    ports:
-      - "8081:8081"
     environment:
       MONGO_BD: ${MONGO_BD}
       MONGO_HOST: ${MONGO_HOST}
@@ -85,8 +84,6 @@ services:
     image: ghcr.io/shot-your-pet/frontend-groupe9/${FRONTEND_IMAGE}
     container_name: frontend_container_syp
     restart: unless-stopped
-    ports:
-      - "8083:80"
     environment:
       API_URL: ${API_URL}
       KEYCLOAK_URL: ${KEYCLOAK_URL}
@@ -98,7 +95,6 @@ services:
     container_name: rabbitmq_container_syp
     restart: unless-stopped
     ports:
-      - "5672:5672"
       - "15672:15672"
     environment:
       RABBITMQ_ERLANG_COOKIE: "secret_cookie"
@@ -110,8 +106,6 @@ services:
     environment:
       MONGO_INITDB_ROOT_USERNAME: ${MONGO_USERNAME}
       MONGO_INITDB_ROOT_PASSWORD: ${MONGO_PASSWORD}
-    ports:
-      - "27017:27017"
 
   mariadb:
     image: mariadb:11.0.2
@@ -122,8 +116,6 @@ services:
       MYSQL_DATABASE: ${DB_DB}
       MYSQL_USER: ${DB_USER}
       MYSQL_PASSWORD: ${DB_PASSWORD}
-    ports:
-      - "3306:3306"
     healthcheck:
       test: mariadb-admin ping -h 127.0.0.1 -u $$MYSQL_USER --password=$$MYSQL_PASSWORD
       timeout: 10s
@@ -135,27 +127,31 @@ services:
     pull_policy: always
     container_name: publications_container_syp
     restart: unless-stopped
-    ports:
-      - "8085:8080"
     depends_on:
       rabbitmq:
         condition: service_started
-      mariadb:
+      publications_db:
         condition: service_healthy
     environment:
-      MONGODB_HOST: publications_image
-      MONGODB_USERNAME: ${MONGO_USERNAME}
-      MONGODB_PASSWORD: ${MONGO_PASSWORD}
+      MONGODB_HOST: publications_db
+      MONGODB_USERNAME: ${PUBLICATIONS_MONGODB_USERNAME}
+      MONGODB_PASSWORD: ${PUBLICATIONS_MONGODB_PASSWORD}
       REALM_KEYCLOAK_URL: ${KEYCLOAK_REALM}
       RABBIT_MQ_ADDRESS: amqp://${RABBITMQ_USERNAME}:${RABBITMQ_PASSWORD}@${RABBITMQ_HOST}:${RABBITMQ_PORT}/
 
-  publications_image:
+  publications_db:
     image: mongo:8.0.5
     container_name: mongodb-publications_container_syp
     restart: unless-stopped
     environment:
       MONGO_INITDB_ROOT_USERNAME: ${PUBLICATIONS_MONGODB_USERNAME}
-      MONGO_INITDB_ROOT_PASSWORD: ${PUBLICATIONS_MONGODB_USERNAME}
+      MONGO_INITDB_ROOT_PASSWORD: ${PUBLICATIONS_MONGODB_PASSWORD}
+    healthcheck:
+      test: ["CMD", "mongosh", "--eval", '"db.adminCommand(''ping'')"']
+      interval: 5s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
 
   challenges_db:
     image: mariadb:11.0.2
@@ -173,3 +169,55 @@ services:
       timeout: 10s
       start_period: 5s
       retries: 10
+
+  challenges:
+    image: ghcr.io/shot-your-pet/challenges-goupe9/${CHALLENGES_IMAGE}
+    container_name: challenges_container_syp
+    restart: unless-stopped
+    environment:
+      DB_DB: "challenges"
+      DB_USER: ${DB_USER}
+      DB_PASSWORD: ${DB_PASSWORD}
+      DB_HOST: challenges_db
+      DB_PORT: 3306
+      REALM_KEYCLOAK_URL: ${REALM_KEYCLOAK_URL}
+      RABBITMQ_HOST: rabbitmq
+      RABBITMQ_PORT: 5672
+      RABBITMQ_USERNAME: guest
+      RABBITMQ_PASSWORD: guest
+      ALLOWED_CORS: ${ALLOWED_CORS}
+      LOG_LEVEL: TRACE
+    ports:
+      - "8086:8080"
+    depends_on:
+      - rabbitmq
+      - challenges_db
+      - keycloak
+
+  timeline:
+    image: ghcr.io/shot-your-pet/timeline:${TIMELINE_IMAGE:-main}
+    pull_policy: always
+    container_name: timeline_container_syp
+    restart: unless-stopped
+    depends_on:
+      rabbitmq:
+        condition: service_started
+      timeline_db:
+        condition: service_healthy
+    environment:
+      ConnectionStrings__ShotYourPet: Host=timeline_db;Database=${TIMELINE_DB_TABLE:-timeline};Password=${TIMELINE_DB_PASSWORD:-postgres};Username=${TIMELINE_DB_USER:-postgres}
+      ConnectionStrings__RabbitMQ: amqp://${RABBITMQ_USERNAME}:${RABBITMQ_PASSWORD}@${RABBITMQ_HOST}:${RABBITMQ_PORT}/
+
+  timeline_db:
+    image: postgres
+    restart: unless-stopped
+    shm_size: 128mb
+    environment:
+      POSTGRES_USER: ${TIMELINE_DB_USER:-postgres}
+      POSTGRES_PASSWORD: ${TIMELINE_DB_PASSWORD:-postgres}
+      POSTGRES_DB: ${TIMELINE_DB_TABLE:-timeline}
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -d $$POSTGRES_DB -U $$POSTGRES_USER"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
