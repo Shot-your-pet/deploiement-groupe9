@@ -1,4 +1,40 @@
 @url = http://localhost:8086
 
-###
+### Challenge du jour
 GET {{url}}/challenges/today
+
+### Ajouter un challenge
+POST {{url}}/challenges
+Content-Type: application/JSON
+
+{
+  "titreChallenge" : "Challenge 8",
+  "descriptionChallenge" : "Chall 8"
+}
+
+### Modifier un challenge
+PUT {{url}}/challenges/6015b93c-fc5e-45bf-92c9-1db239b97637
+Content-Type: application/JSON
+
+{
+  "titreChallenge" : "Challenge 1 modifié",
+  "descriptionChallenge" : "banajsbbsdkdejed"
+}
+
+### Récupérer tous les challenges
+GET {{url}}/challenges
+
+
+### Supprimer un challenge
+DELETE {{url}}/challenges/6015b93c-fc5e-45bf-92c9-1db239b97637
+
+### DEBUG Générer un nouveau challenge du jour
+POST {{url}}/challenges/historique
+
+
+
+
+
+
+
+
