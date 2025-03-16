@@ -157,3 +157,19 @@ services:
       MONGO_INITDB_ROOT_USERNAME: ${PUBLICATIONS_MONGODB_USERNAME}
       MONGO_INITDB_ROOT_PASSWORD: ${PUBLICATIONS_MONGODB_USERNAME}
 
+  challenges_db:
+    image: mariadb:11.0.2
+    container_name: challenges_db_container_syp
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+      MYSQL_DATABASE: "challenges"
+      MYSQL_USER: ${DB_USER}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+    ports:
+      - "3309:3306"
+    healthcheck:
+      test: mariadb-admin ping -h 127.0.0.1 -u $$MYSQL_USER --password=$$MYSQL_PASSWORD
+      timeout: 10s
+      start_period: 5s
+      retries: 10
