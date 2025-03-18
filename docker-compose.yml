@@ -13,6 +13,7 @@ services:
       - frontend
       - publications
       - timeline
+      - challenges
 
   keycloak:
     image: quay.io/keycloak/keycloak:25.0.1
@@ -136,7 +137,7 @@ services:
       MONGODB_HOST: publications_db
       MONGODB_USERNAME: ${PUBLICATIONS_MONGODB_USERNAME}
       MONGODB_PASSWORD: ${PUBLICATIONS_MONGODB_PASSWORD}
-      REALM_KEYCLOAK_URL: ${KEYCLOAK_REALM}
+      REALM_KEYCLOAK_URL: ${REALM_KEYCLOAK_URL}
       RABBIT_MQ_ADDRESS: amqp://${RABBITMQ_USERNAME}:${RABBITMQ_PASSWORD}@${RABBITMQ_HOST}:${RABBITMQ_PORT}/
 
   publications_db:
@@ -162,8 +163,6 @@ services:
       MYSQL_DATABASE: "challenges"
       MYSQL_USER: ${DB_USER}
       MYSQL_PASSWORD: ${DB_PASSWORD}
-    ports:
-      - "3309:3306"
     healthcheck:
       test: mariadb-admin ping -h 127.0.0.1 -u $$MYSQL_USER --password=$$MYSQL_PASSWORD
       timeout: 10s
@@ -187,8 +186,6 @@ services:
       RABBITMQ_PASSWORD: guest
       ALLOWED_CORS: ${ALLOWED_CORS}
       LOG_LEVEL: TRACE
-    ports:
-      - "8086:8080"
     depends_on:
       - rabbitmq
       - challenges_db
@@ -204,10 +201,11 @@ services:
         condition: service_started
       timeline_db:
         condition: service_healthy
+      utilisateur:
+        condition: service_started
     environment:
       ConnectionStrings__ShotYourPet: Host=timeline_db;Database=${TIMELINE_DB_TABLE:-timeline};Password=${TIMELINE_DB_PASSWORD:-postgres};Username=${TIMELINE_DB_USER:-postgres}
       ConnectionStrings__RabbitMQ: amqp://${RABBITMQ_USERNAME}:${RABBITMQ_PASSWORD}@${RABBITMQ_HOST}:${RABBITMQ_PORT}/
-
   timeline_db:
     image: postgres
     restart: unless-stopped
