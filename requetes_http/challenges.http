@@ -1,35 +1,42 @@
-@url = http://localhost:8086
+#@url = http://localhost:8086
+@url = http://localhost/api
 
 ### Challenge du jour
 GET {{url}}/challenges/today
+Authorization: {{auth_token_admin}}
 
 ### Ajouter un challenge
 POST {{url}}/challenges
 Content-Type: application/JSON
+Authorization: {{auth_token_admin}}
 
 {
-  "titreChallenge" : "Challenge 8",
-  "descriptionChallenge" : "Chall 8"
+  "titre" : "Challenge 8",
+  "description" : "Chall 8"
 }
 
 ### Modifier un challenge
 PUT {{url}}/challenges/6015b93c-fc5e-45bf-92c9-1db239b97637
 Content-Type: application/JSON
+Authorization: {{auth_token_admin}}
 
 {
-  "titreChallenge" : "Challenge 1 modifié",
-  "descriptionChallenge" : "banajsbbsdkdejed"
+  "titre" : "Challenge 1 modifié",
+  "description" : "banajsbbsdkdejed"
 }
 
 ### Récupérer tous les challenges
 GET {{url}}/challenges
+Authorization: {{auth_token_admin}}
 
 
 ### Supprimer un challenge
 DELETE {{url}}/challenges/6015b93c-fc5e-45bf-92c9-1db239b97637
+Authorization: {{auth_token_admin}}
 
 ### DEBUG Générer un nouveau challenge du jour
 POST {{url}}/challenges/historique
+Authorization: {{auth_token_admin}}
 
 
 

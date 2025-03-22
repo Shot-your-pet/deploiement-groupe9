@@ -1,4 +1,4 @@
-#@url = http://localhost:8080
+#@url = http://localhost:8084
 @url = http://localhost/api
 
 ###
@@ -6,7 +6,7 @@ GET {{url}}/utilisateurs/profile
 Authorization: {{auth_token_admin}}
 
 ###
-GET {{url}}/utilisateurs
+GET {{url}}/utilisateurs/utilisateurs
 Authorization: {{auth_token_admin}}
 
 ###

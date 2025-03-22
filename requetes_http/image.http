@@ -1,5 +1,38 @@
-@url = http://localhost:8081
+#@url = http://localhost:8081
+@url = http://localhost/api
 
 ###
-GET {{url}}/images/1899770240116592640
+GET {{url}}/images/1903489163760635904
 Authorization: {{auth_token_admin}}
+
+###
+POST {{url}}/images/upload?type=AVATAR
+Content-Type: multipart/form-data; boundary=file
+Authorization: {{auth_token_admin}}
+
+--file
+Content-Disposition: form-data; name="file"; filename="image.png"
+Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet
+
+< chemin/image.png
+--file--
+
+
+
+### Test rabbitmq pour essayer le convertAndSend
+POST {{url}}/images/test/utilisateur
+Content-Type: application/json
+Authorization: {{auth_token_admin}}
+
+{
+  "id": "becbbb7c-d3e9-4848-973f-5ac1c19c1ae8"
+}
+
+###
+POST {{url}}/images/test/utilisateurs
+Content-Type: application/json
+Authorization: {{auth_token_admin}}
+
+{
+  "ids": ["becbbb7c-d3e9-4848-973f-5ac1c19c1ae8", "1523ef3e-46b0-4277-9602-3690725eaa00"]
+}

@@ -4,11 +4,11 @@ services:
     container_name: gateway_container_syp
     restart: unless-stopped
     ports:
-      - "8080:80"
+      - "80:80"
     volumes:
       - ./nginx.conf:/etc/nginx/nginx.conf:ro
     depends_on:
-      - utilisateur
+      - utilisateurs
       - images
       - frontend
       - publications
@@ -36,9 +36,9 @@ services:
     depends_on:
       - rabbitmq
 
-  utilisateur:
+  utilisateurs:
     image: ghcr.io/shot-your-pet/utilisateur-groupe9/${UTILISATEUR_IMAGE}
-    container_name: utilisateur_container_syp
+    container_name: utilisateurs_container_syp
     restart: unless-stopped
     ports:
       - "8084:8080"
@@ -46,7 +46,7 @@ services:
       DB_DB: ${DB_DB}
       DB_USER: ${DB_USER}
       DB_PASSWORD: ${DB_PASSWORD}
-      DB_HOST: mariadb
+      DB_HOST: mariadb_utilisateurs
       DB_PORT: 3306
       REALM_KEYCLOAK_URL: ${REALM_KEYCLOAK_URL}
       RABBITMQ_HOST: rabbitmq
@@ -58,12 +58,16 @@ services:
     depends_on:
       rabbitmq:
         condition: service_started
-      mariadb:
+      mariadb_utilisateurs:
         condition: service_healthy
   images:
     image: ghcr.io/shot-your-pet/images-groupe9/${IMAGES_IMAGE}
     container_name: images_container_syp
     restart: unless-stopped
+    ports:
+      - "8081:8081"
+    volumes:
+      - ./images:/app/images
     environment:
       MONGO_BD: ${MONGO_BD}
       MONGO_HOST: ${MONGO_HOST}
@@ -77,13 +81,15 @@ services:
       ALLOWED_CORS: ${ALLOWED_CORS}
     depends_on:
       - rabbitmq
-      - mongodb_image
+      - mongodb_images
       - keycloak
 
   frontend:
     image: ghcr.io/shot-your-pet/frontend-groupe9/${FRONTEND_IMAGE}
     container_name: frontend_container_syp
     restart: unless-stopped
+    ports:
+      - "8083:80"
     environment:
       API_URL: ${API_URL}
       KEYCLOAK_URL: ${KEYCLOAK_URL}
@@ -96,21 +102,26 @@ services:
     restart: unless-stopped
     ports:
       - "15672:15672"
+      - "5672:5672"
     environment:
       RABBITMQ_ERLANG_COOKIE: "secret_cookie"
 
-  mongodb_image:
+  mongodb_images:
     image: mongo:8.0.5
     container_name: mongodb-image_container_syp
     restart: unless-stopped
+    ports:
+      - "27017:27017"
     environment:
       MONGO_INITDB_ROOT_USERNAME: ${MONGO_USERNAME}
       MONGO_INITDB_ROOT_PASSWORD: ${MONGO_PASSWORD}
 
-  mariadb:
+  mariadb_utilisateurs:
     image: mariadb:11.0.2
     container_name: utilisateur_db_container_syp
     restart: unless-stopped
+    ports:
+      - "3306:3306"
     environment:
       MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
       MYSQL_DATABASE: ${DB_DB}
@@ -130,16 +141,16 @@ services:
     depends_on:
       rabbitmq:
         condition: service_started
-      publications_db:
+      mongodb_publications:
         condition: service_healthy
     environment:
-      MONGODB_HOST: publications_db
+      MONGODB_HOST: mongodb_publications
       MONGODB_USERNAME: ${PUBLICATIONS_MONGODB_USERNAME}
       MONGODB_PASSWORD: ${PUBLICATIONS_MONGODB_PASSWORD}
       REALM_KEYCLOAK_URL: ${KEYCLOAK_REALM}
       RABBIT_MQ_ADDRESS: amqp://${RABBITMQ_USERNAME}:${RABBITMQ_PASSWORD}@${RABBITMQ_HOST}:${RABBITMQ_PORT}/
 
-  publications_db:
+  mongodb_publications:
     image: mongo:8.0.5
     container_name: mongodb-publications_container_syp
     restart: unless-stopped
@@ -153,9 +164,9 @@ services:
       retries: 3
       start_period: 10s
 
-  challenges_db:
+  mariadb_challenges:
     image: mariadb:11.0.2
-    container_name: challenges_db_container_syp
+    container_name: challenges-db_container_syp
     restart: unless-stopped
     environment:
       MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
@@ -178,7 +189,7 @@ services:
       DB_DB: "challenges"
       DB_USER: ${DB_USER}
       DB_PASSWORD: ${DB_PASSWORD}
-      DB_HOST: challenges_db
+      DB_HOST: mariadb_challenges
       DB_PORT: 3306
       REALM_KEYCLOAK_URL: ${REALM_KEYCLOAK_URL}
       RABBITMQ_HOST: rabbitmq
@@ -186,12 +197,13 @@ services:
       RABBITMQ_USERNAME: guest
       RABBITMQ_PASSWORD: guest
       ALLOWED_CORS: ${ALLOWED_CORS}
+      CHALLENGE_CRON: ${CHALLENGE_CRON}
       LOG_LEVEL: TRACE
     ports:
       - "8086:8080"
     depends_on:
       - rabbitmq
-      - challenges_db
+      - mariadb_challenges
       - keycloak
 
   timeline:
@@ -202,15 +214,16 @@ services:
     depends_on:
       rabbitmq:
         condition: service_started
-      timeline_db:
+      postgres_timeline:
         condition: service_healthy
     environment:
-      ConnectionStrings__ShotYourPet: Host=timeline_db;Database=${TIMELINE_DB_TABLE:-timeline};Password=${TIMELINE_DB_PASSWORD:-postgres};Username=${TIMELINE_DB_USER:-postgres}
+      ConnectionStrings__ShotYourPet: Host=postgres_timeline;Database=${TIMELINE_DB_TABLE:-timeline};Password=${TIMELINE_DB_PASSWORD:-postgres};Username=${TIMELINE_DB_USER:-postgres}
       ConnectionStrings__RabbitMQ: amqp://${RABBITMQ_USERNAME}:${RABBITMQ_PASSWORD}@${RABBITMQ_HOST}:${RABBITMQ_PORT}/
 
-  timeline_db:
+  postgres_timeline:
     image: postgres
     restart: unless-stopped
+    container_name: timeline-db_container_syp
     shm_size: 128mb
     environment:
       POSTGRES_USER: ${TIMELINE_DB_USER:-postgres}
