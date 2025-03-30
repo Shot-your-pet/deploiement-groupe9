@@ -14,3 +14,5 @@ https://github.com/Shot-your-pet/frontend-groupe9
 https://github.com/Shot-your-pet/bff-groupe9
 https://github.com/Shot-your-pet/test-integration-groupe9
 https://github.com/Shot-your-pet/gitlabci-groupe9
+
+[//]: # (docker-compose up --pull always)

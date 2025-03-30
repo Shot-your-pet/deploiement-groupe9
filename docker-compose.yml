@@ -4,7 +4,7 @@ services:
     container_name: gateway_container_syp
     restart: unless-stopped
     ports:
-      - "80:80"
+      - "8080:80"
     volumes:
       - ./nginx.conf:/etc/nginx/nginx.conf:ro
     depends_on:
@@ -61,6 +61,7 @@ services:
         condition: service_started
       mariadb_utilisateurs:
         condition: service_healthy
+
   images:
     image: ghcr.io/shot-your-pet/images-groupe9/${IMAGES_IMAGE}
     container_name: images_container_syp
@@ -81,9 +82,12 @@ services:
       RABBITMQ_PASSWORD: guest
       ALLOWED_CORS: ${ALLOWED_CORS}
     depends_on:
-      - rabbitmq
-      - mongodb_images
-      - keycloak
+      rabbitmq:
+        condition: service_started
+      mongodb_images:
+        condition: service_started
+      keycloak:
+        condition: service_started
 
   frontend:
     image: ghcr.io/shot-your-pet/frontend-groupe9/${FRONTEND_IMAGE}
@@ -213,7 +217,7 @@ services:
         condition: service_started
       postgres_timeline:
         condition: service_healthy
-      utilisateur:
+      utilisateurs:
         condition: service_started
     environment:
       ConnectionStrings__ShotYourPet: Host=postgres_timeline;Database=${TIMELINE_DB_TABLE:-timeline};Password=${TIMELINE_DB_PASSWORD:-postgres};Username=${TIMELINE_DB_USER:-postgres}
