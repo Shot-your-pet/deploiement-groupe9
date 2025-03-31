@@ -41,8 +41,7 @@ services:
     image: ghcr.io/shot-your-pet/utilisateur-groupe9/${UTILISATEUR_IMAGE}
     container_name: utilisateurs_container_syp
     restart: unless-stopped
-    ports:
-      - "8084:8080"
+    pull_policy: always
     environment:
       DB_DB: ${DB_DB}
       DB_USER: ${DB_USER}
@@ -66,8 +65,6 @@ services:
     image: ghcr.io/shot-your-pet/images-groupe9/${IMAGES_IMAGE}
     container_name: images_container_syp
     restart: unless-stopped
-    ports:
-      - "8081:8081"
     volumes:
       - ./images:/app/images
     environment:
@@ -93,8 +90,7 @@ services:
     image: ghcr.io/shot-your-pet/frontend-groupe9/${FRONTEND_IMAGE}
     container_name: frontend_container_syp
     restart: unless-stopped
-    ports:
-      - "8083:80"
+    pull_policy: always
     environment:
       API_URL: ${API_URL}
       KEYCLOAK_URL: ${KEYCLOAK_URL}
@@ -107,7 +103,6 @@ services:
     restart: unless-stopped
     ports:
       - "15672:15672"
-      - "5672:5672"
     environment:
       RABBITMQ_ERLANG_COOKIE: "secret_cookie"
 
@@ -115,8 +110,6 @@ services:
     image: mongo:8.0.5
     container_name: mongodb-image_container_syp
     restart: unless-stopped
-    ports:
-      - "27017:27017"
     environment:
       MONGO_INITDB_ROOT_USERNAME: ${MONGO_USERNAME}
       MONGO_INITDB_ROOT_PASSWORD: ${MONGO_PASSWORD}
@@ -125,8 +118,6 @@ services:
     image: mariadb:11.0.2
     container_name: utilisateur_db_container_syp
     restart: unless-stopped
-    ports:
-      - "3306:3306"
     environment:
       MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
       MYSQL_DATABASE: ${DB_DB}
