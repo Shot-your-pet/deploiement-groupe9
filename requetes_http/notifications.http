@@ -1,0 +1,6 @@
+@url = http://localhost:8080
+#@url = http://localhost:8080/api
+
+###
+GET {{url}}/notifications/utilisateurs
+#Authorization: {{auth_token_admin}}
