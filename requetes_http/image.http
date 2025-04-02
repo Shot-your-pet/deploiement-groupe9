@@ -1,9 +1,9 @@
-#@url = http://localhost:8081
-@url = http://localhost/api
+@url = http://localhost:8081
+#@url = http://localhost:8080/api
 
 ###
-GET {{url}}/images/1903489163760635904
-Authorization: {{auth_token_admin}}
+GET {{url}}/images/1906401369112317952
+#Authorization: {{auth_token_admin}}
 
 ###
 POST {{url}}/images/upload?type=AVATAR
@@ -11,10 +11,10 @@ Content-Type: multipart/form-data; boundary=file
 Authorization: {{auth_token_admin}}
 
 --file
-Content-Disposition: form-data; name="file"; filename="image.png"
+Content-Disposition: form-data; name="file"; filename="Wankul-20180909150952.png"
 Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet
 
-< chemin/image.png
+< C:\Users\maxse\OneDrive\Images\Wankul\Wankul-20180909150952.png
 --file--
 
 
@@ -25,7 +25,7 @@ Content-Type: application/json
 Authorization: {{auth_token_admin}}
 
 {
-  "id": "becbbb7c-d3e9-4848-973f-5ac1c19c1ae8"
+  "id": "83bc2ab6-320c-4c09-9453-658d1a3c89ed"
 }
 
 ###

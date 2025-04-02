@@ -155,7 +155,7 @@ services:
       MONGO_INITDB_ROOT_USERNAME: ${PUBLICATIONS_MONGODB_USERNAME}
       MONGO_INITDB_ROOT_PASSWORD: ${PUBLICATIONS_MONGODB_PASSWORD}
     healthcheck:
-      test: ["CMD", "mongosh", "--eval", '"db.adminCommand(''ping'')"']
+      test: [ "CMD", "mongosh", "--eval", '"db.adminCommand(''ping'')"' ]
       interval: 5s
       timeout: 5s
       retries: 3
@@ -225,7 +225,7 @@ services:
       POSTGRES_PASSWORD: ${TIMELINE_DB_PASSWORD:-postgres}
       POSTGRES_DB: ${TIMELINE_DB_TABLE:-timeline}
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -d $$POSTGRES_DB -U $$POSTGRES_USER"]
+      test: [ "CMD-SHELL", "pg_isready -d $$POSTGRES_DB -U $$POSTGRES_USER" ]
       interval: 10s
       timeout: 5s
       retries: 5
@@ -274,7 +274,47 @@ services:
       POSTGRES_PASSWORD: ${DB_PASSWORD}
       POSTGRES_DB: "notifications"
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -d $$POSTGRES_DB -U $$POSTGRES_USER"]
+      test: [ "CMD-SHELL", "pg_isready -d $$POSTGRES_DB -U $$POSTGRES_USER" ]
       interval: 10s
       timeout: 5s
       retries: 5
+
+  loki:
+    image: grafana/loki:2.4.1
+    container_name: loki_container_syp
+    ports:
+      - "3100:3100"
+    volumes:
+      - ./monitoring/loki-config.yaml:/etc/loki/local-config.yaml
+      - ./monitoring/loki-data:/tmp/loki
+    command: -config.file=/etc/loki/local-config.yaml
+    restart: unless-stopped
+
+  promtail:
+    image: grafana/promtail:2.4.1
+    container_name: promtail_container_syp
+    volumes:
+      - /var/lib/docker/containers:/var/lib/docker/containers:ro
+      - /var/log:/var/log:ro
+      - ./monitoring/promtail-config.yml:/etc/promtail/config.yml
+    command: -config.file=/etc/promtail/config.yml
+    restart: unless-stopped
+
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: prometheus_container_syp
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./monitoring/prometheus.yml:/etc/prometheus/prometheus.yml
+    restart: unless-stopped
+
+  grafana:
+    image: grafana/grafana:latest
+    container_name: grafana_container_syp
+    ports:
+      - "3000:3000"
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=admin  # Définir le mot de passe admin
+    restart: unless-stopped
+
