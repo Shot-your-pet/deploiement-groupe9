@@ -1,0 +1,960 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Shot your pet mockoon",
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:3001/"
+    }
+  ],
+  "paths": {
+    "/timeline": {
+      "get": {
+        "description": "Affiche la timeline de l'utilisateur",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "example": "{\n  \"code\": \"200\",\n  \"message\": \"Timeline récupérée\",\n  \"contenu\": {\n    \"actualiseLe\": \"2024-12-12T00:00:00\",\n    \"publications\": [\n      {\n        \"id\": \"id1\",\n        \"datePublication\": \"2024-12-12T00:00:00\",\n        \"description\": \"On se déttend les balloches ici\",\n        \"auteur\": \"Randy\",\n        \"photo\": \"publication.jpg\",\n        \"nombreLike\": \"23\",\n        \"likeUtilisateur\": true\n      },\n      {\n        \"id\": \"id2\",\n        \"datePublication\": \"2024-12-12T00:00:00\",\n        \"description\": \"Le caca c'est ma came\",\n        \"auteur\": \"Alban\",\n        \"photo\": \"publication.jpg\",\n        \"nombreLike\": \"2\",\n        \"likeUtilisateur\": false\n      },\n      {\n        \"id\": \"id3\",\n        \"datePublication\": \"2024-12-12T00:00:00\",\n        \"description\": \"C'est moi qui vais te le détendre tes balloches Randy\",\n        \"auteur\": \"Jordan\",\n        \"photo\": \"publication.jpg\",\n        \"nombreLike\": \"253\",\n        \"likeUtilisateur\": true\n      }\n    ]\n  }\n}"
+              }
+            },
+            "headers": {
+              "Access-Control-Allow-Origin": {
+                "schema": {
+                  "type": "string"
+                },
+                "example": "*"
+              },
+              "Access-Control-Allow-Methods": {
+                "schema": {
+                  "type": "string"
+                },
+                "example": "GET,POST,PUT,PATCH,DELETE,HEAD,OPTIONS"
+              },
+              "Access-Control-Allow-Headers": {
+                "schema": {
+                  "type": "string"
+                },
+                "example": "Content-Type, Origin, Accept, Authorization, Content-Length, X-Requested-With"
+              }
+            }
+          },
+          "401": {
+            "description": "Non authentifié",
+            "content": {
+              "application/json": {
+                "example": {}
+              }
+            },
+            "headers": {
+              "Access-Control-Allow-Origin": {
+                "schema": {
+                  "type": "string"
+                },
+                "example": "*"
+              },
+              "Access-Control-Allow-Methods": {
+                "schema": {
+                  "type": "string"
+                },
+                "example": "GET,POST,PUT,PATCH,DELETE,HEAD,OPTIONS"
+              },
+              "Access-Control-Allow-Headers": {
+                "schema": {
+                  "type": "string"
+                },
+                "example": "Content-Type, Origin, Accept, Authorization, Content-Length, X-Requested-With"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/publications": {
+      "post": {
+        "description": "Publie la photo de l'utilisateur pour le challenge J",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "example": {}
+              }
+            },
+            "headers": {
+              "Access-Control-Allow-Origin": {
+                "schema": {
+                  "type": "string"
+                },
+                "example": "*"
+              },
+              "Access-Control-Allow-Methods": {
+                "schema": {
+                  "type": "string"
+                },
+                "example": "GET,POST,PUT,PATCH,DELETE,HEAD,OPTIONS"
+              },
+              "Access-Control-Allow-Headers": {
+                "schema": {
+                  "type": "string"
+                },
+                "example": "Content-Type, Origin, Accept, Authorization, Content-Length, X-Requested-With"
+              }
+            }
+          },
+          "401": {
+            "description": "Non authentifié",
+            "content": {
+              "application/json": {
+                "example": "{}"
+              }
+            },
+            "headers": {
+              "Access-Control-Allow-Origin": {
+                "schema": {
+                  "type": "string"
+                },
+                "example": "*"
+              },
+              "Access-Control-Allow-Methods": {
+                "schema": {
+                  "type": "string"
+                },
+                "example": "GET,POST,PUT,PATCH,DELETE,HEAD,OPTIONS"
+              },
+              "Access-Control-Allow-Headers": {
+                "schema": {
+                  "type": "string"
+                },
+                "example": "Content-Type, Origin, Accept, Authorization, Content-Length, X-Requested-With"
+              }
+            }
+          },
+          "409": {
+            "description": "Conflits",
+            "content": {
+              "application/json": {
+                "example": {}
+              }
+            },
+            "headers": {
+              "Access-Control-Allow-Origin": {
+                "schema": {
+                  "type": "string"
+                },
+                "example": "*"
+              },
+              "Access-Control-Allow-Methods": {
+                "schema": {
+                  "type": "string"
+                },
+                "example": "GET,POST,PUT,PATCH,DELETE,HEAD,OPTIONS"
+              },
+              "Access-Control-Allow-Headers": {
+                "schema": {
+                  "type": "string"
+                },
+                "example": "Content-Type, Origin, Accept, Authorization, Content-Length, X-Requested-With"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/images/{img}": {
+      "get": {
+        "description": "Récupère l'image d'un utilisateur ou d'une publication",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "example": {}
+              }
+            },
+            "headers": {
+              "Access-Control-Allow-Origin": {
+                "schema": {
+                  "type": "string"
+                },
+                "example": "*"
+              },
+              "Access-Control-Allow-Methods": {
+                "schema": {
+                  "type": "string"
+                },
+                "example": "GET,POST,PUT,PATCH,DELETE,HEAD,OPTIONS"
+              },
+              "Access-Control-Allow-Headers": {
+                "schema": {
+                  "type": "string"
+                },
+                "example": "Content-Type, Origin, Accept, Authorization, Content-Length, X-Requested-With"
+              }
+            }
+          },
+          "404": {
+            "description": "Pas de photo",
+            "content": {
+              "application/json": {
+                "example": {}
+              }
+            },
+            "headers": {
+              "Access-Control-Allow-Origin": {
+                "schema": {
+                  "type": "string"
+                },
+                "example": "*"
+              },
+              "Access-Control-Allow-Methods": {
+                "schema": {
+                  "type": "string"
+                },
+                "example": "GET,POST,PUT,PATCH,DELETE,HEAD,OPTIONS"
+              },
+              "Access-Control-Allow-Headers": {
+                "schema": {
+                  "type": "string"
+                },
+                "example": "Content-Type, Origin, Accept, Authorization, Content-Length, X-Requested-With"
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "img",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ]
+      }
+    },
+    "/profile": {
+      "get": {
+        "description": "Récupère le détails du profil de l'utilisateur connecté",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "example": {}
+              }
+            },
+            "headers": {
+              "Access-Control-Allow-Origin": {
+                "schema": {
+                  "type": "string"
+                },
+                "example": "*"
+              },
+              "Access-Control-Allow-Methods": {
+                "schema": {
+                  "type": "string"
+                },
+                "example": "GET,POST,PUT,PATCH,DELETE,HEAD,OPTIONS"
+              },
+              "Access-Control-Allow-Headers": {
+                "schema": {
+                  "type": "string"
+                },
+                "example": "Content-Type, Origin, Accept, Authorization, Content-Length, X-Requested-With"
+              }
+            }
+          },
+          "401": {
+            "description": "Non authentifié",
+            "content": {
+              "application/json": {
+                "example": "{}"
+              }
+            },
+            "headers": {
+              "Access-Control-Allow-Origin": {
+                "schema": {
+                  "type": "string"
+                },
+                "example": "*"
+              },
+              "Access-Control-Allow-Methods": {
+                "schema": {
+                  "type": "string"
+                },
+                "example": "GET,POST,PUT,PATCH,DELETE,HEAD,OPTIONS"
+              },
+              "Access-Control-Allow-Headers": {
+                "schema": {
+                  "type": "string"
+                },
+                "example": "Content-Type, Origin, Accept, Authorization, Content-Length, X-Requested-With"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/utilisateurs/avatar": {
+      "put": {
+        "description": "Modifie l'avatar de l'utilisateur connecté",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "example": {}
+              }
+            },
+            "headers": {
+              "Access-Control-Allow-Origin": {
+                "schema": {
+                  "type": "string"
+                },
+                "example": "*"
+              },
+              "Access-Control-Allow-Methods": {
+                "schema": {
+                  "type": "string"
+                },
+                "example": "GET,POST,PUT,PATCH,DELETE,HEAD,OPTIONS"
+              },
+              "Access-Control-Allow-Headers": {
+                "schema": {
+                  "type": "string"
+                },
+                "example": "Content-Type, Origin, Accept, Authorization, Content-Length, X-Requested-With"
+              }
+            }
+          },
+          "401": {
+            "description": "Non authentifié",
+            "content": {
+              "application/json": {
+                "example": {}
+              }
+            },
+            "headers": {
+              "Access-Control-Allow-Origin": {
+                "schema": {
+                  "type": "string"
+                },
+                "example": "*"
+              },
+              "Access-Control-Allow-Methods": {
+                "schema": {
+                  "type": "string"
+                },
+                "example": "GET,POST,PUT,PATCH,DELETE,HEAD,OPTIONS"
+              },
+              "Access-Control-Allow-Headers": {
+                "schema": {
+                  "type": "string"
+                },
+                "example": "Content-Type, Origin, Accept, Authorization, Content-Length, X-Requested-With"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/notifications": {
+      "get": {
+        "description": "Récupère les notifications de l'utilisateur connecté",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "example": "{\n  \"code\": \"200\",\n  \"message\": \"Notifications de l'utilisateur récupérées\",\n  \"contenu\": {}\n}"
+              }
+            },
+            "headers": {
+              "Access-Control-Allow-Origin": {
+                "schema": {
+                  "type": "string"
+                },
+                "example": "*"
+              },
+              "Access-Control-Allow-Methods": {
+                "schema": {
+                  "type": "string"
+                },
+                "example": "GET,POST,PUT,PATCH,DELETE,HEAD,OPTIONS"
+              },
+              "Access-Control-Allow-Headers": {
+                "schema": {
+                  "type": "string"
+                },
+                "example": "Content-Type, Origin, Accept, Authorization, Content-Length, X-Requested-With"
+              }
+            }
+          },
+          "401": {
+            "description": "Non authentifié",
+            "content": {
+              "application/json": {
+                "example": "{}"
+              }
+            },
+            "headers": {
+              "Access-Control-Allow-Origin": {
+                "schema": {
+                  "type": "string"
+                },
+                "example": "*"
+              },
+              "Access-Control-Allow-Methods": {
+                "schema": {
+                  "type": "string"
+                },
+                "example": "GET,POST,PUT,PATCH,DELETE,HEAD,OPTIONS"
+              },
+              "Access-Control-Allow-Headers": {
+                "schema": {
+                  "type": "string"
+                },
+                "example": "Content-Type, Origin, Accept, Authorization, Content-Length, X-Requested-With"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/utilisateurs": {
+      "get": {
+        "description": "Récupères tous les profils d'utilisateurs pour pouvoir ajouter en ami",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "example": "{\n  \"code\": \"200\",\n  \"message\": \"Profils des utilisateurs récupérés\",\n  \"contenu\": {}\n}"
+              }
+            },
+            "headers": {
+              "Access-Control-Allow-Origin": {
+                "schema": {
+                  "type": "string"
+                },
+                "example": "*"
+              },
+              "Access-Control-Allow-Methods": {
+                "schema": {
+                  "type": "string"
+                },
+                "example": "GET,POST,PUT,PATCH,DELETE,HEAD,OPTIONS"
+              },
+              "Access-Control-Allow-Headers": {
+                "schema": {
+                  "type": "string"
+                },
+                "example": "Content-Type, Origin, Accept, Authorization, Content-Length, X-Requested-With"
+              }
+            }
+          },
+          "401": {
+            "description": "Non authentifié",
+            "content": {
+              "application/json": {
+                "example": "{}"
+              }
+            },
+            "headers": {
+              "Access-Control-Allow-Origin": {
+                "schema": {
+                  "type": "string"
+                },
+                "example": "*"
+              },
+              "Access-Control-Allow-Methods": {
+                "schema": {
+                  "type": "string"
+                },
+                "example": "GET,POST,PUT,PATCH,DELETE,HEAD,OPTIONS"
+              },
+              "Access-Control-Allow-Headers": {
+                "schema": {
+                  "type": "string"
+                },
+                "example": "Content-Type, Origin, Accept, Authorization, Content-Length, X-Requested-With"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/profiles/{idUtilisateur}": {
+      "get": {
+        "description": "Récupère le profil d'un utilisateur",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "example": "{\n  \"code\": \"200\",\n  \"message\": \"Details d'un utilisateur récupéré\",\n  \"contenu\": {}\n}"
+              }
+            },
+            "headers": {
+              "Access-Control-Allow-Origin": {
+                "schema": {
+                  "type": "string"
+                },
+                "example": "*"
+              },
+              "Access-Control-Allow-Methods": {
+                "schema": {
+                  "type": "string"
+                },
+                "example": "GET,POST,PUT,PATCH,DELETE,HEAD,OPTIONS"
+              },
+              "Access-Control-Allow-Headers": {
+                "schema": {
+                  "type": "string"
+                },
+                "example": "Content-Type, Origin, Accept, Authorization, Content-Length, X-Requested-With"
+              }
+            }
+          },
+          "401": {
+            "description": "Non authentifié",
+            "content": {
+              "application/json": {
+                "example": "{}"
+              }
+            },
+            "headers": {
+              "Access-Control-Allow-Origin": {
+                "schema": {
+                  "type": "string"
+                },
+                "example": "*"
+              },
+              "Access-Control-Allow-Methods": {
+                "schema": {
+                  "type": "string"
+                },
+                "example": "GET,POST,PUT,PATCH,DELETE,HEAD,OPTIONS"
+              },
+              "Access-Control-Allow-Headers": {
+                "schema": {
+                  "type": "string"
+                },
+                "example": "Content-Type, Origin, Accept, Authorization, Content-Length, X-Requested-With"
+              }
+            }
+          },
+          "404": {
+            "description": "Utilisateur introuvable",
+            "content": {
+              "application/json": {
+                "example": "{}"
+              }
+            },
+            "headers": {
+              "Access-Control-Allow-Origin": {
+                "schema": {
+                  "type": "string"
+                },
+                "example": "*"
+              },
+              "Access-Control-Allow-Methods": {
+                "schema": {
+                  "type": "string"
+                },
+                "example": "GET,POST,PUT,PATCH,DELETE,HEAD,OPTIONS"
+              },
+              "Access-Control-Allow-Headers": {
+                "schema": {
+                  "type": "string"
+                },
+                "example": "Content-Type, Origin, Accept, Authorization, Content-Length, X-Requested-With"
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "idUtilisateur",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ]
+      }
+    },
+    "/images/upload": {
+      "post": {
+        "description": "Enregistre une image dans l'application",
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "example": "{\n  \"code\": \"200\",\n  \"message\": \"Image enregistrée\",\n  \"contenu\": {\n    \"idPhoto\": \"{{ faker 'string.uuid' }}\"\n  }\n}"
+              }
+            },
+            "headers": {
+              "Access-Control-Allow-Origin": {
+                "schema": {
+                  "type": "string"
+                },
+                "example": "*"
+              },
+              "Access-Control-Allow-Methods": {
+                "schema": {
+                  "type": "string"
+                },
+                "example": "GET,POST,PUT,PATCH,DELETE,HEAD,OPTIONS"
+              },
+              "Access-Control-Allow-Headers": {
+                "schema": {
+                  "type": "string"
+                },
+                "example": "Content-Type, Origin, Accept, Authorization, Content-Length, X-Requested-With"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/challenges/today": {
+      "get": {
+        "description": "Récupère le challenge du jour",
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "example": "{\n  \"code\": \"200\",\n  \"message\": \"Dernier challenge récupérer\",\n  \"contenu\": {\n    \"id\": \"challenge254\",\n    \"intitule\": \"Shoot ton animal en train de faire caca dans la gorge de ton pote\",\n    \"dateDebut\": \"2024-12-12T00:00:00\",\n    \"dateFin\": \"2024-12-13T00:00:00\"\n  }\n}"
+              }
+            },
+            "headers": {
+              "Access-Control-Allow-Origin": {
+                "schema": {
+                  "type": "string"
+                },
+                "example": "*"
+              },
+              "Access-Control-Allow-Methods": {
+                "schema": {
+                  "type": "string"
+                },
+                "example": "GET,POST,PUT,PATCH,DELETE,HEAD,OPTIONS"
+              },
+              "Access-Control-Allow-Headers": {
+                "schema": {
+                  "type": "string"
+                },
+                "example": "Content-Type, Origin, Accept, Authorization, Content-Length, X-Requested-With"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/profile/participations": {
+      "get": {
+        "description": "Renvoie la liste des participations de l'utilisayteur pour l'afficher dans le calendrier",
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "example": "{\n  \"code\": \"200\",\n  \"message\": \"Historique de participations récupéré\",\n  \"contenu\": [\n    {\n      \"datePublication\": \"2025-03-04T00:00:00\",\n      \"image\": \"participation.jpg\",\n      \"description\": \"Description du jour\",\n      \"nombreLike\": 278\n    },\n    {\n      \"datePublication\": \"2025-03-14T00:00:00\",\n      \"image\": \"participation.jpg\",\n      \"description\": \"Description du jour\",\n      \"nombreLike\": 2\n    },\n    {\n      \"datePublication\": \"2025-03-27T00:00:00\",\n      \"image\": \"participation.jpg\",\n      \"description\": \"Description du jour\",\n      \"nombreLike\": 93\n    }\n  ]\n}"
+              }
+            },
+            "headers": {
+              "Access-Control-Allow-Origin": {
+                "schema": {
+                  "type": "string"
+                },
+                "example": "*"
+              },
+              "Access-Control-Allow-Methods": {
+                "schema": {
+                  "type": "string"
+                },
+                "example": "GET,POST,PUT,PATCH,DELETE,HEAD,OPTIONS"
+              },
+              "Access-Control-Allow-Headers": {
+                "schema": {
+                  "type": "string"
+                },
+                "example": "Content-Type, Origin, Accept, Authorization, Content-Length, X-Requested-With"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/challenges": {
+      "post": {
+        "description": "Ajoute un challenge",
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "example": "{}"
+              }
+            },
+            "headers": {
+              "Access-Control-Allow-Origin": {
+                "schema": {
+                  "type": "string"
+                },
+                "example": "*"
+              },
+              "Access-Control-Allow-Methods": {
+                "schema": {
+                  "type": "string"
+                },
+                "example": "GET,POST,PUT,PATCH,DELETE,HEAD,OPTIONS"
+              },
+              "Access-Control-Allow-Headers": {
+                "schema": {
+                  "type": "string"
+                },
+                "example": "Content-Type, Origin, Accept, Authorization, Content-Length, X-Requested-With"
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "description": "Récupère tous les challenges",
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "example": "{}"
+              }
+            },
+            "headers": {
+              "Access-Control-Allow-Origin": {
+                "schema": {
+                  "type": "string"
+                },
+                "example": "*"
+              },
+              "Access-Control-Allow-Methods": {
+                "schema": {
+                  "type": "string"
+                },
+                "example": "GET,POST,PUT,PATCH,DELETE,HEAD,OPTIONS"
+              },
+              "Access-Control-Allow-Headers": {
+                "schema": {
+                  "type": "string"
+                },
+                "example": "Content-Type, Origin, Accept, Authorization, Content-Length, X-Requested-With"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/challenges/{id}": {
+      "put": {
+        "description": "Modifie un challenge",
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "example": "{}"
+              }
+            },
+            "headers": {
+              "Access-Control-Allow-Origin": {
+                "schema": {
+                  "type": "string"
+                },
+                "example": "*"
+              },
+              "Access-Control-Allow-Methods": {
+                "schema": {
+                  "type": "string"
+                },
+                "example": "GET,POST,PUT,PATCH,DELETE,HEAD,OPTIONS"
+              },
+              "Access-Control-Allow-Headers": {
+                "schema": {
+                  "type": "string"
+                },
+                "example": "Content-Type, Origin, Accept, Authorization, Content-Length, X-Requested-With"
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ]
+      },
+      "delete": {
+        "description": "Supprime un challenge",
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "example": "{}"
+              }
+            },
+            "headers": {
+              "Access-Control-Allow-Origin": {
+                "schema": {
+                  "type": "string"
+                },
+                "example": "*"
+              },
+              "Access-Control-Allow-Methods": {
+                "schema": {
+                  "type": "string"
+                },
+                "example": "GET,POST,PUT,PATCH,DELETE,HEAD,OPTIONS"
+              },
+              "Access-Control-Allow-Headers": {
+                "schema": {
+                  "type": "string"
+                },
+                "example": "Content-Type, Origin, Accept, Authorization, Content-Length, X-Requested-With"
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ]
+      }
+    },
+    "/images/test/utilisateur": {
+      "get": {
+        "description": "Récupère les informations d'un utilisateur (Pour vérifier que il y avait bien un échange rabbit)",
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "example": "{}"
+              }
+            },
+            "headers": {
+              "Access-Control-Allow-Origin": {
+                "schema": {
+                  "type": "string"
+                },
+                "example": "*"
+              },
+              "Access-Control-Allow-Methods": {
+                "schema": {
+                  "type": "string"
+                },
+                "example": "GET,POST,PUT,PATCH,DELETE,HEAD,OPTIONS"
+              },
+              "Access-Control-Allow-Headers": {
+                "schema": {
+                  "type": "string"
+                },
+                "example": "Content-Type, Origin, Accept, Authorization, Content-Length, X-Requested-With"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/images/test/utilisateurs": {
+      "get": {
+        "description": "Récupère les informations des utilisateurs (Pour vérifier que il y avait bien un échange rabbit)",
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "example": "{}"
+              }
+            },
+            "headers": {
+              "Access-Control-Allow-Origin": {
+                "schema": {
+                  "type": "string"
+                },
+                "example": "*"
+              },
+              "Access-Control-Allow-Methods": {
+                "schema": {
+                  "type": "string"
+                },
+                "example": "GET,POST,PUT,PATCH,DELETE,HEAD,OPTIONS"
+              },
+              "Access-Control-Allow-Headers": {
+                "schema": {
+                  "type": "string"
+                },
+                "example": "Content-Type, Origin, Accept, Authorization, Content-Length, X-Requested-With"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/notifications/subscribe": {
+      "post": {
+        "description": "Enregistre le navigateur de l'utilisateur pour qu'il recois des notifications push",
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "example": "{}"
+              }
+            },
+            "headers": {
+              "Access-Control-Allow-Origin": {
+                "schema": {
+                  "type": "string"
+                },
+                "example": "*"
+              },
+              "Access-Control-Allow-Methods": {
+                "schema": {
+                  "type": "string"
+                },
+                "example": "GET,POST,PUT,PATCH,DELETE,HEAD,OPTIONS"
+              },
+              "Access-Control-Allow-Headers": {
+                "schema": {
+                  "type": "string"
+                },
+                "example": "Content-Type, Origin, Accept, Authorization, Content-Length, X-Requested-With"
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

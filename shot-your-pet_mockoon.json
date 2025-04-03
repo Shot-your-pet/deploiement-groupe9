@@ -75,7 +75,7 @@
       "responses": [
         {
           "uuid": "69c0d989-594a-48ed-99f6-6ace1aa64e06",
-          "body": "{\n  \"code\": \"200\",\n  \"message\": \"Shot publié !\",\n  \"contenu\":\n    {\n      \"id\": \"\",\n      \"datePublication\":\n      \"description\": \"\",\n    }\n}",
+          "body": "{\n  \"code\": \"200\",\n  \"message\": \"Shot publié !\",\n  \"contenu\":\n    {\n      \"id\": \"\",\n      \"description\": \"\",\n    }\n}",
           "latency": 0,
           "statusCode": 200,
           "label": "OK",
@@ -194,7 +194,7 @@
       "responses": [
         {
           "uuid": "702823b7-6a24-4671-8ff2-e88f75b7c805",
-          "body": "{\n  \"code\": \"200\",\n  \"message\": \"Profil de l'utilisateur récupérée\",\n  \"contenu\": {\n    \"id\": \"{{ faker 'string.uuid' }}\",\n    \"pseudo\": \"xXGamingRGB45000Xx\",\n    \"prenom\": \"Thiméo\",\n    \"nom\": \"Martin\",\n    \"email\": \"tim.méo@gmail.com\",\n    \"derniereConnexion\": \"2024-12-12T00:00:00\",\n    \"avatar\": \"xXGamingRGB45000Xx-image.jpg\",\n    \"membreDepuis\": \"2024-12-12T00:00:00\"\n  }\n}",
+          "body": "{\n  \"code\": \"200\",\n  \"message\": \"Profil de l'utilisateur récupérée\",\n  \"contenu\": {\n    \"id\": \"{{ faker 'string.uuid' }}\",\n    \"pseudo\": \"xXGamingRGB45000Xx\",\n    \"prenom\": \"Thiméo\",\n    \"nom\": \"Martin\",\n    \"email\": \"tim.méo@gmail.com\",\n    \"avatar\": \"xXGamingRGB45000Xx-image.jpg\",\n  }\n}",
           "latency": 0,
           "statusCode": 200,
           "label": "OK",
@@ -238,9 +238,9 @@
     {
       "uuid": "b335c844-19c5-45de-bdb9-ca87be60ca3e",
       "type": "http",
-      "documentation": "Modifie le profil de l'utilisateur connecté",
+      "documentation": "Modifie l'avatar de l'utilisateur connecté",
       "method": "put",
-      "endpoint": "utilisateurs",
+      "endpoint": "utilisateurs/avatar",
       "responses": [
         {
           "uuid": "4c3fd119-4a28-448b-85f0-f42633216084",
@@ -340,7 +340,7 @@
       "type": "http",
       "documentation": "Récupères tous les profils d'utilisateurs pour pouvoir ajouter en ami",
       "method": "get",
-      "endpoint": "profiles",
+      "endpoint": "utilisateurs",
       "responses": [
         {
           "uuid": "7b9e5e26-44c4-41f5-a5a1-6a8485640e57",
@@ -457,7 +457,7 @@
     {
       "uuid": "964492aa-1f9c-4043-a77d-fb3b5488fc11",
       "type": "http",
-      "documentation": "",
+      "documentation": "Enregistre une image dans l'application",
       "method": "post",
       "endpoint": "images/upload",
       "responses": [
@@ -490,7 +490,7 @@
       "type": "http",
       "documentation": "Récupère le challenge du jour",
       "method": "get",
-      "endpoint": "challenge",
+      "endpoint": "challenges/today",
       "responses": [
         {
           "uuid": "5ea1245a-c8ef-4e67-9ca9-10e6a93f0ff4",
@@ -526,6 +526,223 @@
         {
           "uuid": "30fb4922-b201-486f-b26f-746555d67dc8",
           "body": "{\n  \"code\": \"200\",\n  \"message\": \"Historique de participations récupéré\",\n  \"contenu\": [\n    {\n      \"datePublication\": \"2025-03-04T00:00:00\",\n      \"image\": \"participation.jpg\",\n      \"description\": \"Description du jour\",\n      \"nombreLike\": 278\n    },\n    {\n      \"datePublication\": \"2025-03-14T00:00:00\",\n      \"image\": \"participation.jpg\",\n      \"description\": \"Description du jour\",\n      \"nombreLike\": 2\n    },\n    {\n      \"datePublication\": \"2025-03-27T00:00:00\",\n      \"image\": \"participation.jpg\",\n      \"description\": \"Description du jour\",\n      \"nombreLike\": 93\n    }\n  ]\n}",
+          "latency": 0,
+          "statusCode": 200,
+          "label": "",
+          "headers": [],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": true,
+          "crudKey": "id",
+          "callbacks": []
+        }
+      ],
+      "responseMode": null,
+      "streamingMode": null,
+      "streamingInterval": 0
+    },
+    {
+      "uuid": "13fd2efe-1310-42f9-9384-2cc739b31d5d",
+      "type": "http",
+      "documentation": "Ajoute un challenge",
+      "method": "post",
+      "endpoint": "challenges",
+      "responses": [
+        {
+          "uuid": "7775ab4c-0b16-4fa1-8702-126fba0a541d",
+          "body": "{}",
+          "latency": 0,
+          "statusCode": 200,
+          "label": "",
+          "headers": [],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": true,
+          "crudKey": "id",
+          "callbacks": []
+        }
+      ],
+      "responseMode": null,
+      "streamingMode": null,
+      "streamingInterval": 0
+    },
+    {
+      "uuid": "2e7d3d03-5732-490a-8c42-a9c87ab324e7",
+      "type": "http",
+      "documentation": "Modifie un challenge",
+      "method": "put",
+      "endpoint": "challenges/:id",
+      "responses": [
+        {
+          "uuid": "b1497acc-c995-4aeb-89ef-73aa21d70a22",
+          "body": "{}",
+          "latency": 0,
+          "statusCode": 200,
+          "label": "",
+          "headers": [],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": true,
+          "crudKey": "id",
+          "callbacks": []
+        }
+      ],
+      "responseMode": null,
+      "streamingMode": null,
+      "streamingInterval": 0
+    },
+    {
+      "uuid": "f70b2c9e-74ef-450c-8b37-368b0d7d9827",
+      "type": "http",
+      "documentation": "Récupère tous les challenges",
+      "method": "get",
+      "endpoint": "challenges",
+      "responses": [
+        {
+          "uuid": "a16376df-0a6f-423e-b98e-c29a5b39d337",
+          "body": "{}",
+          "latency": 0,
+          "statusCode": 200,
+          "label": "",
+          "headers": [],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": true,
+          "crudKey": "id",
+          "callbacks": []
+        }
+      ],
+      "responseMode": null,
+      "streamingMode": null,
+      "streamingInterval": 0
+    },
+    {
+      "uuid": "98f65609-068f-4b57-a0be-9ebffa861be4",
+      "type": "http",
+      "documentation": "Supprime un challenge",
+      "method": "delete",
+      "endpoint": "challenges/:id",
+      "responses": [
+        {
+          "uuid": "fe893beb-ef8e-4a3c-952e-37f6129035b0",
+          "body": "{}",
+          "latency": 0,
+          "statusCode": 200,
+          "label": "",
+          "headers": [],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": true,
+          "crudKey": "id",
+          "callbacks": []
+        }
+      ],
+      "responseMode": null,
+      "streamingMode": null,
+      "streamingInterval": 0
+    },
+    {
+      "uuid": "3c46834b-9d9c-45c5-91e8-d1de66bd5680",
+      "type": "http",
+      "documentation": "Récupère les informations d'un utilisateur (Pour vérifier que il y avait bien un échange rabbit)",
+      "method": "get",
+      "endpoint": "images/test/utilisateur",
+      "responses": [
+        {
+          "uuid": "8a5baf59-0c1f-4da9-b923-645a6047df8d",
+          "body": "{}",
+          "latency": 0,
+          "statusCode": 200,
+          "label": "",
+          "headers": [],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": true,
+          "crudKey": "id",
+          "callbacks": []
+        }
+      ],
+      "responseMode": null,
+      "streamingMode": null,
+      "streamingInterval": 0
+    },
+    {
+      "uuid": "2ff5c451-0295-4d28-a143-7f1dcd5caec5",
+      "type": "http",
+      "documentation": "Récupère les informations des utilisateurs (Pour vérifier que il y avait bien un échange rabbit)",
+      "method": "get",
+      "endpoint": "images/test/utilisateurs",
+      "responses": [
+        {
+          "uuid": "5fc17976-28d9-4604-99ed-0babb4cd7768",
+          "body": "{}",
+          "latency": 0,
+          "statusCode": 200,
+          "label": "",
+          "headers": [],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": true,
+          "crudKey": "id",
+          "callbacks": []
+        }
+      ],
+      "responseMode": null,
+      "streamingMode": null,
+      "streamingInterval": 0
+    },
+    {
+      "uuid": "bf406308-e45b-4eee-8228-a24cd1412fda",
+      "type": "http",
+      "documentation": "Enregistre le navigateur de l'utilisateur pour qu'il recois des notifications push",
+      "method": "post",
+      "endpoint": "notifications/subscribe",
+      "responses": [
+        {
+          "uuid": "6d40ceaf-51d3-4874-b90f-8767adbc2fb2",
+          "body": "{}",
           "latency": 0,
           "statusCode": 200,
           "label": "",
@@ -592,6 +809,34 @@
     {
       "type": "route",
       "uuid": "8d26092a-d57f-4573-8175-16b2d959cc93"
+    },
+    {
+      "type": "route",
+      "uuid": "13fd2efe-1310-42f9-9384-2cc739b31d5d"
+    },
+    {
+      "type": "route",
+      "uuid": "2e7d3d03-5732-490a-8c42-a9c87ab324e7"
+    },
+    {
+      "type": "route",
+      "uuid": "f70b2c9e-74ef-450c-8b37-368b0d7d9827"
+    },
+    {
+      "type": "route",
+      "uuid": "98f65609-068f-4b57-a0be-9ebffa861be4"
+    },
+    {
+      "type": "route",
+      "uuid": "3c46834b-9d9c-45c5-91e8-d1de66bd5680"
+    },
+    {
+      "type": "route",
+      "uuid": "2ff5c451-0295-4d28-a143-7f1dcd5caec5"
+    },
+    {
+      "type": "route",
+      "uuid": "bf406308-e45b-4eee-8228-a24cd1412fda"
     }
   ],
   "proxyMode": false,
