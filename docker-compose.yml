@@ -280,25 +280,25 @@ services:
       retries: 5
 
   loki:
-    image: grafana/loki:2.4.1
+    image: grafana/loki:3.0.0
     container_name: loki_container_syp
     ports:
       - "3100:3100"
     volumes:
-      - ./monitoring/loki-config.yaml:/etc/loki/local-config.yaml
-      - ./monitoring/loki-data:/tmp/loki
-    command: -config.file=/etc/loki/local-config.yaml
+      - ./monitoring/loki-config.yaml:/mnt/config/loki-config.yaml
+    command: -config.file=/mnt/config/loki-config.yaml
     restart: unless-stopped
 
   promtail:
-    image: grafana/promtail:2.4.1
+    image: grafana/promtail:3.0.0
     container_name: promtail_container_syp
     volumes:
       - /var/lib/docker/containers:/var/lib/docker/containers:ro
-      - /var/log:/var/log:ro
-      - ./monitoring/promtail-config.yml:/etc/promtail/config.yml
-    command: -config.file=/etc/promtail/config.yml
+      - ./monitoring/promtail-config.yml:/mnt/config/promtail-config.yml
+    command: -config.file=/mnt/config/promtail-config.yml
     restart: unless-stopped
+    depends_on:
+      - loki
 
   prometheus:
     image: prom/prometheus:latest
@@ -315,6 +315,6 @@ services:
     ports:
       - "3000:3000"
     environment:
-      - GF_SECURITY_ADMIN_PASSWORD=admin  # Définir le mot de passe admin
+      - GF_SECURITY_ADMIN_PASSWORD=${GRAFANA_PASSWORD}  # Définir le mot de passe admin
     restart: unless-stopped
 
