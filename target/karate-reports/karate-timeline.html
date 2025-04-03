@@ -1,0 +1,32 @@
+<!DOCTYPE HTML>
+<html lang="en">
+  <head>
+    <meta charset="utf-8"/>
+    <title>Karate Timeline</title>
+    <style>
+      body, html { font-family: arial, sans-serif; font-size: 11pt; }
+      #visualization { box-sizing: border-box; width: 100%; height: 300px; }
+      .vis-item.failed { background-color: #F2928C; }
+      .page-heading { padding: 0.5em; margin-bottom: 0.5em; background-color: lightcyan; border: 1px solid gray; }
+    </style>
+    <script src="res/vis.min.js"></script>
+    <link href="res/vis.min.css" rel="stylesheet" type="text/css" />
+  </head>
+  <body>
+    <div class="page-heading">
+      <a href="karate-summary.html">Summary</a>
+    </div>     
+    <div id="visualization"></div>
+    <script>
+var groups = [{"content":"main","id":1}];
+var items = [{"id":1,"group":1,"content":"test-ti-endpoints[1:6]","start":1743717496327,"end":1743717498787,"title":"test-ti-endpoints[1:6] 23:58:16.327-23:58:18.787 Get timeline","className":"failed"},{"id":2,"group":1,"content":"test-ti-endpoints[2:12]","start":1743717498987,"end":1743717499026,"title":"test-ti-endpoints[2:12] 23:58:18.987-23:58:19.026 Get user profile","className":"failed"},{"id":3,"group":1,"content":"test-ti-endpoints[3:18]","start":1743717499097,"end":1743717499982,"title":"test-ti-endpoints[3:18] 23:58:19.097-23:58:19.982 Upload an image","className":"failed"},{"id":4,"group":1,"content":"test-ti-endpoints[4:25]","start":1743717500026,"end":1743717500108,"title":"test-ti-endpoints[4:25] 23:58:20.026-23:58:20.108 Subscribe to notifications","className":"failed"},{"id":5,"group":1,"content":"test-ti-endpoints[5:32]","start":1743717500170,"end":1743717500193,"title":"test-ti-endpoints[5:32] 23:58:20.170-23:58:20.193 Add a new challenge","className":"failed"},{"id":6,"group":1,"content":"test-ti-endpoints[6:39]","start":1743717500232,"end":1743717500254,"title":"test-ti-endpoints[6:39] 23:58:20.232-23:58:20.254 Update a challenge","className":"failed"},{"id":7,"group":1,"content":"test-ti-endpoints[7:46]","start":1743717500343,"end":1743717500359,"title":"test-ti-endpoints[7:46] 23:58:20.343-23:58:20.359 Get all challenges","className":"failed"},{"id":8,"group":1,"content":"test-ti-endpoints[8:52]","start":1743717500436,"end":1743717500459,"title":"test-ti-endpoints[8:52] 23:58:20.436-23:58:20.459 Delete a challenge","className":"failed"}];
+</script>
+    <script>
+      var container = document.getElementById('visualization');
+      var timeline = new vis.Timeline(container);
+      timeline.setOptions({groupOrder: 'content'});
+      timeline.setGroups(new vis.DataSet(groups));
+      timeline.setItems(new vis.DataSet(items));
+    </script>
+  </body>
+</html>
