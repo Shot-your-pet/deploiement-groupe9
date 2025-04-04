@@ -7,7 +7,8 @@ resource "azurerm_container_app" "rabbit" {
     transport   = "tcp"
     target_port = 5672
     traffic_weight {
-      percentage = 100
+      percentage      = 100
+      latest_revision = true
     }
   }
 
