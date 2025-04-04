@@ -1,0 +1,4 @@
+FROM quay.io/keycloak/keycloak:25.0.1
+
+COPY SPI_Keycloak.jar /opt/keycloak/providers/syp-event-listener.jar
+COPY realm-syp.json /opt/keycloak/data/import/realm-export.json
