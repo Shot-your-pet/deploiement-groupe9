@@ -14,6 +14,7 @@ services:
       - publications
       - timeline
       - challenges
+      - notifications
 
   keycloak:
     image: quay.io/keycloak/keycloak:25.0.1
@@ -155,7 +156,7 @@ services:
       MONGO_INITDB_ROOT_USERNAME: ${PUBLICATIONS_MONGODB_USERNAME}
       MONGO_INITDB_ROOT_PASSWORD: ${PUBLICATIONS_MONGODB_PASSWORD}
     healthcheck:
-      test: [ "CMD", "mongosh", "--eval", '"db.adminCommand(''ping'')"' ]
+      test: ["CMD", "mongosh", "--eval", '"db.adminCommand(''ping'')"']
       interval: 5s
       timeout: 5s
       retries: 3
@@ -225,7 +226,7 @@ services:
       POSTGRES_PASSWORD: ${TIMELINE_DB_PASSWORD:-postgres}
       POSTGRES_DB: ${TIMELINE_DB_TABLE:-timeline}
     healthcheck:
-      test: [ "CMD-SHELL", "pg_isready -d $$POSTGRES_DB -U $$POSTGRES_USER" ]
+      test: ["CMD-SHELL", "pg_isready -d $$POSTGRES_DB -U $$POSTGRES_USER"]
       interval: 10s
       timeout: 5s
       retries: 5
@@ -274,7 +275,7 @@ services:
       POSTGRES_PASSWORD: ${DB_PASSWORD}
       POSTGRES_DB: "notifications"
     healthcheck:
-      test: [ "CMD-SHELL", "pg_isready -d $$POSTGRES_DB -U $$POSTGRES_USER" ]
+      test: ["CMD-SHELL", "pg_isready -d $$POSTGRES_DB -U $$POSTGRES_USER"]
       interval: 10s
       timeout: 5s
       retries: 5
@@ -315,6 +316,5 @@ services:
     ports:
       - "3000:3000"
     environment:
-      - GF_SECURITY_ADMIN_PASSWORD=${GRAFANA_PASSWORD}  # Définir le mot de passe admin
+      - GF_SECURITY_ADMIN_PASSWORD=${GRAFANA_PASSWORD} # Définir le mot de passe admin
     restart: unless-stopped
-
