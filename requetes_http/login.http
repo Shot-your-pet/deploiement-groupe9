@@ -1,5 +1,5 @@
-@url = http://localhost:9001
-#@url = http://192.168.1.37:9001
+#@url = http://localhost:9001
+@url = http://172.28.224.1:9001
 
 ### ADMIN
 POST http://{{url}}/realms/ShotYourPet/protocol/openid-connect/token
