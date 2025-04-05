@@ -3,6 +3,8 @@
 Bienvenue sur le **code source** de l'application *Shot Your Pet* !  
 Ce projet a été réalisé dans le cadre du module d’**Interopérabilité** (S4 Master MIAGE) à l'Université d'Orléans.
 
+Si vous arrivez pas à suivre le tutoriel, vous pouvez vous rendre ici : [Shot Your Pet](https://shotyourpet.toves.fr/)
+
 ## Membres
 
 - Emma
@@ -11,7 +13,7 @@ Ce projet a été réalisé dans le cadre du module d’**Interopérabilité** (
 - Aymeric
 - Maxime
 
-> *(Les noms de famille sont volontairement omis pour des raisons de confidentialité.)*
+> *(Les noms de famille sont volontairement omis pour des raisons de confidentialité. Dépot publique github)*
 
 ---
 
