@@ -126,6 +126,23 @@ Un répertoire **terraform** contient les fichiers nécessaires pour déployer q
 
 ---
 
+## Monitoring
+
+L'application dispose d'un système de monitoring assuré par Grafana, Loki, et Premetheus.
+- Grafana est utilisé pour la visualisation des données.
+- Loki est utilisé pour la gestion des logs.
+- Prometheus est utilisé pour la collecte des métriques.
+- Promtail est utilisé pour l'envoi des logs vers Loki.
+
+Une fois l'application lancé vous pouvez accéder à Grafana via l'url suivante : [http://localhost:3000](http://localhost:3000) avec les identifiants suivants : admin:admin
+Ajouter une source de données Loki avec l'url suivante : http://loki:3100 (doit être fait également pour prometheus : http://prometheus:9090)
+Et vous pourrez visualiser les logs
+
+Attention : fonctionne sous Linux (Windows non à cause de la gestion des volumes docker)
+
+---
+
+
 ## Documents et informations utiles
 
 - Le dossier **documents** contient :
