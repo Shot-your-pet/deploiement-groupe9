@@ -3,6 +3,8 @@
 Bienvenue sur le **code source** de l'application *Shot Your Pet* !  
 Ce projet a été réalisé dans le cadre du module d’**Interopérabilité** (S4 Master MIAGE) à l'Université d'Orléans.
 
+Si vous arrivez pas à suivre le tutoriel, vous pouvez vous rendre ici : [Shot Your Pet](https://shotyourpet.toves.fr/)
+
 ## Membres
 
 - Emma
@@ -11,7 +13,7 @@ Ce projet a été réalisé dans le cadre du module d’**Interopérabilité** (
 - Aymeric
 - Maxime
 
-> *(Les noms de famille sont volontairement omis pour des raisons de confidentialité.)*
+> *(Les noms de famille sont volontairement omis pour des raisons de confidentialité. Dépot publique github)*
 
 ---
 
@@ -86,7 +88,7 @@ Si l’interface de connexion apparaît, c’est que tout est opérationnel !
 
 ---
 
-## Tests
+## Tests rapides de l'API
 
 ### Requête https
 
@@ -119,8 +121,8 @@ Cette configuration permet de lancer les tests d'intégrations sans dépendre d'
 
 ## Déploiement sur le Cloud
 
-Un répertoire **terraform** contient les fichiers nécessaires pour déployer l’application sur **Azure**.
-- *Fonctionnalité expérimentale, néanmoins fonctionnelle.*
+Un répertoire **terraform** contient les fichiers nécessaires pour déployer quelques éléments de l’application sur **Azure**.
+- *Fonctionnalité expérimentale.*
 
 ---
 
@@ -136,3 +138,53 @@ Un répertoire **terraform** contient les fichiers nécessaires pour déployer l
 - Il y a 2 types de notification : 
   - Push 
   - Email (non désactivable 😉)
+
+## Roles de chaque service
+- **Utilisateur** : 
+  - Permet de lier les utilisateurs du realms Keycloak à l'application.
+  - Récupère chaque action effectuée sur keycloak par listeneur d'évènement manipulé par le SPI et l'envoie sur la queue rabbitmq pour être traité coté service utilisateur
+  - Envoie les informations des utilisateurs quand un service en a besoin
+  - Met à jour l'id de l'image qui correspond à l'avatar de l'utilisateur (envoyé par le service d'image)
+- **Image** : 
+  - Permet de stocker les images envoyées par les utilisateurs que ce soit pour les publications et les avatars
+  - Envoie l'id de l'image au service utilisateur si l'image est un avatar
+  - Envoie au client l'image lorsqu'il le demande (affichage coté frontend)
+- **Challenge** : 
+  - Permet de gérer les challenges coté admin (GET, POST, PUT, DELETE)
+  - Génère un nouveau challenge tous les jours en fonction du cron et envoie le nouveau challenge au service de notification
+  - Envoie au frontend le challenge du jour
+  - Permet a publication de vérifier si la publication correspond au challenge du jour
+- **Notification** : 
+  - Permet d'envoyer des notifications push et email lors de la reception du nouveau challenge quotidien
+  - Permet de gérer les abonnements aux notifications push (endpoint, keys etc ...) (pas de firebase)
+- **Frontend** : 
+  - Permet d'afficher l'application et de gérer les interactions utilisateurs
+  - Permet de se connecter à keycloak pour s'authentifier
+  - Permet de se connecter à la gateway pour ensuite rooting des demandes
+- **Gateway** : 
+  - Permet de router les demandes vers les différents services
+  - Permet de gérer la sécurité des services (authentification, autorisation)
+  - Permet de gérer les requêtes envoyées par le frontend et de les router vers le bon service
+- **Timeline** :
+  - permet de stocker les publications
+  - permet de récupérer les publications avec le nom de l'auteur et de filtrer par challenge ou auteur
+- **Publication** :
+  - permet de valider les publications selon si l'auteur existe et qu'il n'a pas déjà répondu au challenge du jour
+  - envois la publication a timeline via une file rabbitmq
+
+## Workflow
+
+Lorsqu'un utilisateur souhaite publier un post, le processus se déroule comme suit :
+
+1. **Envoi de l'image** :
+    - Le front envoie une première requête avec l'image sous form-data au service d'image.
+    - Le service d'image enregistre l'image en lui générant un ID au format Snowflake et renvoie cet ID au front.
+
+2. **Envoi des détails de la publication** :
+    - Le front procède à un deuxième appel API après la réception de l'ID de l'image.
+    - Il appelle le service de publication avec la description du post et l'ID de l'image reçu.
+
+3. **Vérifications et stockage** :
+    - Le service de publication vérifie si l'utilisateur est connecté et s'il a déjà publié ou non durant le challenge.
+    - Une fois les vérifications effectuées, le service de publication envoie le post à la timeline.
+    - La timeline stocke la publication pour qu'elle soit rendue côté front.
