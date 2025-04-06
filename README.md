@@ -88,7 +88,7 @@ Si l’interface de connexion apparaît, c’est que tout est opérationnel !
 
 ---
 
-## Tests rapides de l'API
+## Tests de l'API
 
 ### Requête https
 
