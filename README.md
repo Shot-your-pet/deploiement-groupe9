@@ -3,7 +3,7 @@
 Bienvenue sur le **code source** de l'application *Shot Your Pet* !  
 Ce projet a été réalisé dans le cadre du module d’**Interopérabilité** (S4 Master MIAGE) à l'Université d'Orléans.
 
-Si vous arrivez pas à suivre le tutoriel, vous pouvez vous rendre ici : [Shot Your Pet](https://shotyourpet.toves.fr/)
+Si vous n'arrivez pas à suivre le tutoriel, vous pouvez vous rendre ici : [Shot Your Pet](https://shotyourpet.toves.fr/)
 
 ## Membres
 
@@ -90,9 +90,9 @@ Si l’interface de connexion apparaît, c’est que tout est opérationnel !
 
 ## Tests de l'API
 
-### Requête https
+### Requête rapide http pour API
 
-Dans ce répertoire, un fichier de requêtes (ex.: *login.http* ou équivalent) regroupe un grand nombre de requêtes pour tester les différents services.
+Dans le répertoire /requetes_http, des fichiers de requêtes (ex.: *login.http* ou équivalent) regroupent un grand nombre de requêtes pour tester les différents services.
 - Mettez la bonne URL.
 - Connectez-vous grâce à la requête *login* sur login.http.
 - Explorez pour couvrir la plupart des endpoints.
@@ -131,13 +131,14 @@ Un répertoire **terraform** contient les fichiers nécessaires pour déployer q
 - Le dossier **documents** contient :
     - Le *DAT* (Dossier d’Architecture Technique)
     - Une documentation *Swagger*
+    - un png du schéma de l'architecture de l'application (identique à celui du DAT)
 
 - Chaque projet dispose de son propre pipeline **CI/CD**.
 - Des tests unitaires sont présents sur plusieurs projets.
 - Toutes les fonctionnalités liées à l’utilisateur sont gérées par **Keycloak**.
 - Il y a 2 types de notification : 
   - Push 
-  - Email (non désactivable 😉)
+  - Email
 
 ## Roles de chaque service
 - **Utilisateur** : 
@@ -188,3 +189,13 @@ Lorsqu'un utilisateur souhaite publier un post, le processus se déroule comme s
     - Le service de publication vérifie si l'utilisateur est connecté et s'il a déjà publié ou non durant le challenge.
     - Une fois les vérifications effectuées, le service de publication envoie le post à la timeline.
     - La timeline stocke la publication pour qu'elle soit rendue côté front.
+
+---
+
+## Contact
+
+Pour toute question ou suggestion, veuillez contacter l'équipe de développement.
+
+---
+
+© 2025 | Université d'Orléans | Shot Your Pet.
