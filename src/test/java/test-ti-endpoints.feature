@@ -1,5 +1,4 @@
-Feature: API Testing for Shot Your Pet Mockoon
-
+Feature: API Testing for Shot Your Pet
   Background:
     * url 'http://localhost:8080/api'
     * def challengeId = null
@@ -28,7 +27,7 @@ Feature: API Testing for Shot Your Pet Mockoon
   Scenario: Upload an image
     Given path '/images/upload'
     And header Authorization = 'Bearer ' + authToken
-    And multipart file image = { read: 'exemple_chat.jpg', filename: 'exemple_chat.jpg', contentType: 'image/jpeg' }
+    And multipart file image = { read: 'classpath:images/exemple_chat.jpg', filename: 'exemple_chat.jpg', contentType: 'image/jpeg' }
     When method POST
     Then status 201
     And match response contains { imageUrl: '#string' }

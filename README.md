@@ -35,7 +35,7 @@ Ce projet a été réalisé dans le cadre du module d’**Interopérabilité** (
 - [challenges-groupe9](https://pdicost.univ-orleans.fr/git/projects/PINTEROP/repos/challenges-groupe9/browse)
 - [timeline-groupe9](https://pdicost.univ-orleans.fr/git/projects/PINTEROP/repos/timeline-groupe9/browse)
 - [publications-groupe9](https://pdicost.univ-orleans.fr/git/projects/PINTEROP/repos/publications-groupe9/browse)
-- [deploiement-groupe9](https://pdicost.univ-orleans.fr/git/projects/PINTEROP/repos/deploiement-groupe9/browse)
+- [deploiement-groupe9](https://pdicost.univ-orleans.fr/git/projects/PINTEROP/repos/deploiement-groupe9/browse)  **Depot temporaire de l'implémentation des TI**
 - [frontend-groupe9](https://pdicost.univ-orleans.fr/git/projects/PINTEROP/repos/frontend-groupe9/browse)
 
 #### Dépôts non utilisés (faute de temps) :
@@ -88,12 +88,32 @@ Si l’interface de connexion apparaît, c’est que tout est opérationnel !
 
 ## Tests
 
+### Requête https
+
 Dans ce répertoire, un fichier de requêtes (ex.: *login.http* ou équivalent) regroupe un grand nombre de requêtes pour tester les différents services.
 - Mettez la bonne URL.
 - Connectez-vous grâce à la requête *login* sur login.http.
 - Explorez pour couvrir la plupart des endpoints.
 
 *(Tous les endpoints n’y figurent pas, mais une grande partie y est.)*
+
+### TI Karate
+
+Le répertoire **karate** se trouve dans src/test/java contient les tests d’intégration réalisés avec **Karate**.
+
+#### Prérequis
+
+Les tests d'intégration nécessitent d'avoir l'application déployée et en cours d'exécution. Il faut également disposer d'un compte keycloack, la création de compte keycloack n'est pas gérée par les tests. Celui-ci étant un service externe ne faisant pas partie du périmètre de test. 
+
+Les informations de compte sont à renseigner dans le fichier auth-keycloack.feature.
+
+Pour le lancement manuel de test, celui-ci est possible via le lancement de **KarateRunnerTest.java.** Le lancement des .feature est également possible si vous disposez d'un abonnement aux services de karate lab.
+Cette configuration permet de lancer les tests d'intégrations sans dépendre d'un abonnement à karate lab. 
+
+
+(L'appel à notre API est sécurisé par les tokens Keycloack, ce service peut avoir un fonctionnement instable lors d'une campagne de tests)
+- Pour exécuter les tests, il suffit de lancer la commande suivante :
+```mvn test -Dtest=KarateRunnerTest```
 
 ---
 
