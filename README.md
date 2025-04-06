@@ -88,7 +88,7 @@ Si l’interface de connexion apparaît, c’est que tout est opérationnel !
 
 ---
 
-## Tests
+## Tests rapides de l'API
 
 Dans ce répertoire, un fichier de requêtes (ex.: *login.http* ou équivalent) regroupe un grand nombre de requêtes pour tester les différents services.
 - Mettez la bonne URL.
@@ -101,8 +101,8 @@ Dans ce répertoire, un fichier de requêtes (ex.: *login.http* ou équivalent) 
 
 ## Déploiement sur le Cloud
 
-Un répertoire **terraform** contient les fichiers nécessaires pour déployer l’application sur **Azure**.
-- *Fonctionnalité expérimentale, néanmoins fonctionnelle.*
+Un répertoire **terraform** contient les fichiers nécessaires pour déployer quelques éléments de l’application sur **Azure**.
+- *Fonctionnalité expérimentale.*
 
 ---
 
